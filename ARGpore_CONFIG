@@ -1,0 +1,7 @@
+#taxator-tk
+BLASTDB="/home/disk1/db/nt20190808/nt"
+TAXDUMP="/home/disk1/db/taxonomy20190807/nodes.dmp"
+
+#KRAKEN
+KRAKEN_DB="/home/disk1/db/KRAKEN_DB/"
+

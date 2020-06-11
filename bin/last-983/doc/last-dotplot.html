@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.6: http://docutils.sourceforge.net/" />
+<title>last-dotplot</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 5951 2009-05-18 18:03:10Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left{
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: left }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+<style type="text/css">
+
+/* Style sheet for LAST HTML documents */
+h1 { color: navy }
+h2 { color: teal }
+div.document { margin-left: auto; margin-right: auto; max-width: 45em }
+strong { color: red }
+.option-list td { padding-bottom: 1em }
+table.field-list { border: thin solid green }
+
+</style>
+</head>
+<body>
+<div class="document" id="last-dotplot">
+<h1 class="title">last-dotplot</h1>
+
+<p>This script makes a dotplot, a.k.a. Oxford Grid, of pair-wise sequence
+alignments in MAF or LAST tabular format.  It requires the <a class="reference external" href="https://pillow.readthedocs.io/">Python
+Imaging Library</a> to be installed.
+It can be used like this:</p>
+<pre class="literal-block">
+last-dotplot my-alignments my-plot.png
+</pre>
+<p>The output can be in any format supported by the Imaging Library:</p>
+<pre class="literal-block">
+last-dotplot alns alns.gif
+</pre>
+<div class="section" id="terminology">
+<h2>Terminology</h2>
+<p>last-dotplot shows alignments of one set of sequences against another
+set of sequences.  This document calls a &quot;set of sequences&quot; a
+&quot;genome&quot;, though it need not actually be a genome.</p>
+</div>
+<div class="section" id="options">
+<h2>Options</h2>
+<blockquote>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-h</span>, <span class="option">--help</span></kbd></td>
+<td>Show a help message, with default option values, and exit.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-v</span>, <span class="option">--verbose</span></kbd></td>
+<td>Show progress messages &amp; data about the plot.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-x <var>INT</var></span>, <span class="option">--width=<var>INT</var></span></kbd></td>
+<td>Maximum width in pixels.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-y <var>INT</var></span>, <span class="option">--height=<var>INT</var></span></kbd></td>
+<td>Maximum height in pixels.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-m <var>M</var></span>, <span class="option">--maxseqs=<var>M</var></span></kbd></td>
+<td>Maximum number of horizontal or vertical sequences.  If there
+are &gt;M sequences, the smallest ones (after cutting) will be
+discarded.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-1 <var>PATTERN</var></span>, <span class="option">--seq1=<var>PATTERN</var></span></kbd></td>
+<td>Which sequences to show from the 1st (horizontal) genome.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-2 <var>PATTERN</var></span>, <span class="option">--seq2=<var>PATTERN</var></span></kbd></td>
+<td>Which sequences to show from the 2nd (vertical) genome.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-c <var>COLOR</var></span>, <span class="option">--forwardcolor=<var>COLOR</var></span></kbd></td>
+<td>Color for forward alignments.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-r <var>COLOR</var></span>, <span class="option">--reversecolor=<var>COLOR</var></span></kbd></td>
+<td>Color for reverse alignments.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--alignments=<var>FILE</var></span></kbd></td>
+<td>Read secondary alignments.  For example: we could use primary
+alignment data with one human DNA read aligned to the human
+genome, and secondary alignment data with the whole chimpanzee
+versus human genomes.  last-dotplot will show the parts of the
+secondary alignments that are near the primary alignments.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--sort1=<var>N</var></span></kbd></td>
+<td>Put the 1st genome's sequences left-to-right in order of: their
+appearance in the input (0), their names (1), their lengths (2),
+the top-to-bottom order of (the midpoints of) their alignments
+(3).  You can use two colon-separated values, e.g. &quot;2:1&quot; to
+specify 2 for primary and 1 for secondary alignments.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--sort2=<var>N</var></span></kbd></td>
+<td>Put the 2nd genome's sequences top-to-bottom in order of: their
+appearance in the input (0), their names (1), their lengths (2),
+the left-to-right order of (the midpoints of) their alignments
+(3).</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--strands1=<var>N</var></span></kbd></td>
+<td>Put the 1st genome's sequences: in forwards orientation (0), in
+the orientation of most of their aligned bases (1).  In the
+latter case, the labels will be colored (in the same way as the
+alignments) to indicate the sequences' orientations.  You can
+use two colon-separated values for primary and secondary
+alignments.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--strands2=<var>N</var></span></kbd></td>
+<td>Put the 2nd genome's sequences: in forwards orientation (0), in
+the orientation of most of their aligned bases (1).</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--max-gap1=<var>FRAC</var></span></kbd></td>
+<td>Maximum unaligned gap in the 1st genome.  For example, if two
+parts of one DNA read align to widely-separated parts of one
+chromosome, it's probably best to cut the intervening region
+from the dotplot.  FRAC is a fraction of the length of the
+(primary) alignments.  You can specify &quot;inf&quot; to keep all
+unaligned gaps.  You can use two comma-separated values,
+e.g. &quot;0.5,3&quot; to specify 0.5 for end-gaps (unaligned sequence
+ends) and 3 for mid-gaps (between alignments).  You can use two
+colon-separated values (each of which may be comma-separated)
+for primary and secondary alignments.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--max-gap2=<var>FRAC</var></span></kbd></td>
+<td>Maximum unaligned gap in the 2nd genome.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--pad=<var>FRAC</var></span></kbd></td>
+<td>Length of pad to leave when cutting unaligned gaps.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-j <var>N</var></span>, <span class="option">--join=<var>N</var></span></kbd></td>
+<td>Draw horizontal or vertical lines joining adjacent alignments.
+0 means don't join, 1 means draw vertical lines joining
+alignments that are adjacent in the 1st (horizontal) genome, 2
+means draw horizontal lines joining alignments that are adjacent
+in the 2nd (vertical) genome.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--border-pixels=<var>INT</var></span></kbd></td>
+<td>Number of pixels between sequences.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--border-color=<var>COLOR</var></span></kbd></td>
+<td>Color for pixels between sequences.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--margin-color=<var>COLOR</var></span></kbd></td>
+<td>Color for the margins.</td></tr>
+</tbody>
+</table>
+</blockquote>
+<div class="section" id="text-options">
+<h3>Text options</h3>
+<blockquote>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-f <var>FILE</var></span>, <span class="option">--fontfile=<var>FILE</var></span></kbd></td>
+<td>TrueType or OpenType font file.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-s <var>SIZE</var></span>, <span class="option">--fontsize=<var>SIZE</var></span></kbd></td>
+<td>TrueType or OpenType font size.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--labels1=<var>N</var></span></kbd></td>
+<td>Label the displayed regions of the 1st genome with their:
+sequence name (0), name:length (1), name:start:length (2),
+name:start-end (3).</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--labels2=<var>N</var></span></kbd></td>
+<td>Label the displayed regions of the 2nd genome with their:
+sequence name (0), name:length (1), name:start:length (2),
+name:start-end (3).</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--rot1=<var>ROT</var></span></kbd></td>
+<td>Text rotation for the 1st genome: h(orizontal) or v(ertical).</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--rot2=<var>ROT</var></span></kbd></td>
+<td>Text rotation for the 2nd genome: h(orizontal) or v(ertical).</td></tr>
+</tbody>
+</table>
+</blockquote>
+</div>
+<div class="section" id="annotation-options">
+<h3>Annotation options</h3>
+<p>These options read annotations of sequence segments, and draw them as
+colored horizontal or vertical stripes.  This looks good only if the
+annotations are reasonably sparse: e.g. you can't sensibly view 20000
+gene annotations in one small dotplot.</p>
+<blockquote>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">--bed1=<var>FILE</var></span></kbd></td>
+<td>Read <a class="reference external" href="https://genome.ucsc.edu/FAQ/FAQformat.html#format1">BED-format</a>
+annotations for the 1st genome.  They are drawn as stripes, with
+coordinates given by the first three BED fields.  The color is
+specified by the RGB field if present, else pale red if the
+strand is &quot;+&quot;, pale blue if &quot;-&quot;, or pale purple.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--bed2=<var>FILE</var></span></kbd></td>
+<td>Read BED-format annotations for the 2nd genome.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--rmsk1=<var>FILE</var></span></kbd></td>
+<td>Read repeat annotations for the 1st genome, in RepeatMasker .out
+or rmsk.txt format.  The color is pale purple for &quot;low
+complexity&quot; and &quot;simple repeats&quot;, else pale red for &quot;+&quot; strand
+and pale blue for &quot;-&quot; strand.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--rmsk2=<var>FILE</var></span></kbd></td>
+<td>Read repeat annotations for the 2nd genome.</td></tr>
+</tbody>
+</table>
+</blockquote>
+</div>
+<div class="section" id="gene-options">
+<h3>Gene options</h3>
+<blockquote>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">--genePred1=<var>FILE</var></span></kbd></td>
+<td>Read gene annotations for the 1st genome in <a class="reference external" href="https://genome.ucsc.edu/FAQ/FAQformat.html#format9">genePred format</a>.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--genePred2=<var>FILE</var></span></kbd></td>
+<td>Read gene annotations for the 2nd genome.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--exon-color=<var>COLOR</var></span></kbd></td>
+<td>Color for exons.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--cds-color=<var>COLOR</var></span></kbd></td>
+<td>Color for protein-coding regions.</td></tr>
+</tbody>
+</table>
+</blockquote>
+</div>
+<div class="section" id="unsequenced-gap-options">
+<h3>Unsequenced gap options</h3>
+<p>Note: these &quot;gaps&quot; are <em>not</em> alignment gaps (indels): they are regions
+of unknown sequence.</p>
+<blockquote>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">--gap1=<var>FILE</var></span></kbd></td>
+<td>Read unsequenced gaps in the 1st genome from an agp or gap file.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--gap2=<var>FILE</var></span></kbd></td>
+<td>Read unsequenced gaps in the 2nd genome from an agp or gap file.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--bridged-color=<var>COLOR</var></span></kbd></td>
+<td>Color for bridged gaps.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--unbridged-color=<var>COLOR</var></span></kbd></td>
+<td>Color for unbridged gaps.</td></tr>
+</tbody>
+</table>
+</blockquote>
+<p>An unsequenced gap will be shown only if it covers at least one whole
+pixel.</p>
+</div>
+</div>
+<div class="section" id="choosing-sequences">
+<h2>Choosing sequences</h2>
+<p>For example, you can exclude sequences with names like
+&quot;chrUn_random522&quot; like this:</p>
+<pre class="literal-block">
+last-dotplot -1 'chr[!U]*' -2 'chr[!U]*' alns alns.png
+</pre>
+<p>Option &quot;-1&quot; selects sequences from the 1st (horizontal) genome, and
+&quot;-2&quot; selects sequences from the 2nd (vertical) genome.  'chr[!U]*' is
+a <em>pattern</em> that specifies names starting with &quot;chr&quot;, followed by any
+character except U, followed by anything.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr><td>Pattern</td>
+<td>Meaning</td>
+</tr>
+<tr><td><tt class="docutils literal">*</tt></td>
+<td>zero or more of any character</td>
+</tr>
+<tr><td><tt class="docutils literal">?</tt></td>
+<td>any single character</td>
+</tr>
+<tr><td><tt class="docutils literal">[abc]</tt></td>
+<td>any character in abc</td>
+</tr>
+<tr><td><tt class="docutils literal">[!abc]</tt></td>
+<td>any character not in abc</td>
+</tr>
+</tbody>
+</table>
+<p>If a sequence name has a dot (e.g. &quot;hg19.chr7&quot;), the pattern is
+compared to both the whole name and the part after the dot.</p>
+<p>You can specify more than one pattern, e.g. this gets sequences with
+names starting in &quot;chr&quot; followed by one or two characters:</p>
+<pre class="literal-block">
+last-dotplot -1 'chr?' -1 'chr??' alns alns.png
+</pre>
+<p>You can also specify a sequence range; for example this gets the first
+1000 bases of chr9:</p>
+<pre class="literal-block">
+last-dotplot -1 chr9:0-1000 alns alns.png
+</pre>
+</div>
+<div class="section" id="text-font">
+<h2>Text font</h2>
+<p>You can improve the font quality by increasing its size, e.g. to 20
+points:</p>
+<blockquote>
+last-dotplot -s20 my-alignments my-plot.png</blockquote>
+<p>last-dotplot tries to find a nice font on your computer, but may fail
+and use an ugly font.  You can specify a font like this:</p>
+<pre class="literal-block">
+last-dotplot -f /usr/share/fonts/liberation/LiberationSans-Regular.ttf alns alns.png
+</pre>
+</div>
+<div class="section" id="colors">
+<h2>Colors</h2>
+<p>Colors can be specified in <a class="reference external" href="http://effbot.org/imagingbook/imagecolor.htm">various ways described here</a>.</p>
+</div>
+</div>
+</body>
+</html>

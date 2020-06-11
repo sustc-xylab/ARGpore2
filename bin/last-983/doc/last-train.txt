@@ -1,0 +1,149 @@
+last-train
+==========
+
+last-train finds the rates (probabilities) of insertion, deletion, and
+substitutions between two sets of sequences.  It thereby finds
+suitable substitution and gap scores for aligning them.
+
+It (probabilistically) aligns the sequences using some initial score
+parameters, then estimates better score parameters based on the
+alignments, and repeats this procedure until the parameters stop
+changing.
+
+The usage is like this::
+
+  lastdb mydb reference.fasta
+  last-train mydb queries.fasta
+
+last-train prints a summary of each alignment step, followed by the
+final score parameters, in a format that can be read by `lastal's -p
+option <lastal.html#score-options>`_.
+
+last-train can read .gz files, or from pipes::
+
+  bzcat queries.fasta.bz2 | last-train mydb
+
+Options
+-------
+
+  -h, --help
+         Show a help message, with default option values, and exit.
+  -v, --verbose
+         Show more details of intermediate steps.
+
+Training options
+~~~~~~~~~~~~~~~~
+
+  --revsym
+         Force the substitution scores to have reverse-complement
+         symmetry, e.g. score(A→G) = score(T→C).  This is often
+         appropriate, if neither strand is "special".
+  --matsym
+         Force the substitution scores to have directional symmetry,
+         e.g. score(A→G) = score(G→A).
+  --gapsym
+         Force the insertion costs to equal the deletion costs.
+  --pid=PID
+         Ignore alignments with > PID% identity.  This aims to
+         optimize the parameters for low-similarity alignments
+         (similarly to the BLOSUM matrices).
+  --postmask=NUMBER
+         By default, last-train ignores alignments of mostly-lowercase
+         sequence (by using `last-postmask <last-postmask.html>`_).
+         To turn this off, do ``--postmask=0``.
+  --sample-number=N
+         Use N randomly-chosen chunks of the query sequences.  The
+         queries are chopped into fixed-length chunks (as if they were
+         first concatenated into one long sequence).  If there are ≤ N
+         chunks, all are picked.  Otherwise, if the final chunk is
+         shorter, it is never picked.  0 means use everything.
+  --sample-length=L
+         Use randomly-chosen chunks of length L.
+
+All options below this point are passed to lastal to do the
+alignments: they are described in more detail at `<lastal.html>`_.
+
+Initial parameter options
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  -r SCORE   Initial match score.
+  -q COST    Initial mismatch cost.
+  -p NAME    Initial match/mismatch score matrix.
+  -a COST    Initial gap existence cost.
+  -b COST    Initial gap extension cost.
+  -A COST    Initial insertion existence cost.
+  -B COST    Initial insertion extension cost.
+
+Alignment options
+~~~~~~~~~~~~~~~~~
+
+  -D LENGTH  Query letters per random alignment.  (See `here
+             <last-evalues.html>`_.)
+  -E EG2     Maximum expected alignments per square giga.  (See `here
+             <last-evalues.html>`_.)
+  -s NUMBER  Which query strand to use: 0=reverse, 1=forward, 2=both.
+  -S NUMBER  Specify how to use the substitution score matrix for
+             reverse strands.  If you use ``--revsym``, this makes no
+             difference.  "0" means that the matrix is used as-is for
+             all alignments.  "1" (the default) means that the matrix
+             is used as-is for alignments of query sequence forward
+             strands, and the complemented matrix is used for query
+             sequence reverse strands.
+
+             This parameter is always written in last-train's output,
+             so it will override lastal's default.
+
+  -C COUNT   Before extending gapped alignments, discard any gapless
+             alignment whose query range lies in COUNT other gapless
+             alignments with higher score-per-length.  This aims to
+             reduce run time.
+  -T NUMBER  Type of alignment: 0=local, 1=overlap.
+  -m COUNT   Maximum number of initial matches per query position.
+  -k STEP    Look for initial matches starting only at every STEP-th
+             position in each query.
+  -P COUNT   Number of parallel threads.
+  -X NUMBER  How to score a match/mismatch involving N (for DNA) or X
+             (otherwise).  By default, the lowest match/mismatch score
+             is used. 0 means the default; 1 means treat reference
+             Ns/Xs as fully-ambiguous letters; 2 means treat query
+             Ns/Xs as ambiguous; 3 means treat reference and query
+             Ns/Xs as ambiguous.
+
+             If specified, this parameter is written in last-train's
+             output, so it will override lastal's default.
+
+  -Q NUMBER  How to read the query sequences.  By default, they must
+             be in ``fasta`` format.  ``-Q0`` means ``fasta`` or
+             ``fastq-ignore``.  ``-Q1`` means ``fastq-sanger``.
+
+             The ``fastq`` formats are described here:
+             `<lastal.html>`_.  ``fastq-ignore`` means that the
+             quality data is ignored, so the results will be the same
+             as for ``fasta``.
+
+             For ``fastq-sanger``, last-train assumes the quality
+             codes indicate substitution error probabilities, *not*
+             insertion or deletion error probabilities.  If this
+             assumption is dubious (e.g. for data with many insertion
+             or deletion errors), it may be better to use
+             ``fastq-ignore``.  For ``fastq-sanger``, last-train finds
+             the rates of substitutions not explained by the quality
+             data (ideally, real substitutions as opposed to errors).
+
+             If specified, this parameter is written in last-train's
+             output, so it will override lastal's default.
+
+Bugs
+----
+
+* last-train assumes that gap lengths roughly follow a geometric
+  distribution.  If they do not (which is often the case), the results
+  may be poor.
+
+* last-train can fail for various reasons, e.g. if the sequences are
+  too dissimilar.  If it fails to find any alignments, you could try
+  `reducing the alignment significance threshold
+  <last-tutorial.html#example-6-find-very-short-dna-alignments>`_ with
+  option -D.
+
+* last-train cannot handle DNA-versus-protein alignment.
