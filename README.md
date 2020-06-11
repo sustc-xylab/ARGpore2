@@ -1,11 +1,6 @@
 # ARGpore2
-Author: Yu XIA 
 
-Email: shuixia100@gmail.com
-
-version 2.0
-
-ARGpore2 is designed to do **ARG identification of nanopore 1D/2D reads (fasta format)** and then carried out **taxonomy and plasmid annotation** of ARG-containing long reads.
+**ARG identification** from nanopore 1D/2D reads (fasta format) and then carried out **taxonomy and plasmid annotation** of ARG-containing long reads.
 
 NOTE: You may still use ARGpore2 for your metagenomic-assembled contig/scaffold.
 
