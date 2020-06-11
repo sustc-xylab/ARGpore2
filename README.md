@@ -2,9 +2,7 @@
 
 **ARG identification** from nanopore 1D/2D reads (fasta format) and then carried out **taxonomy and plasmid annotation** of ARG-containing long reads.
 
-NOTE: You may still use ARGpore2 for your metagenomic-assembled contig/scaffold.
-
-Please read this manual carefully to avoid unnecessary errors for ARGpore implementation.
+Please read below instruction carefully to avoid unnecessary errors for ARGpore implementation.
 
 ## Installation 
 ### Pre-requisites for ARGpore 
