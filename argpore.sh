@@ -26,9 +26,10 @@ arguments:
 output files:
 	input_arg.tab	ARG quntification (copy per cell)
 	input_arg.w.taxa.tab	ARGs-containing nanopore reads with taxonomy assignment and plausible plasmid identification
+	input_circular.tab	circular nanopore reads  identified
+	input_plasmid.like.tab	plasmid-like nanopore reads identified 
 	input_taxa.tab	taxonomy assignment of all nanopore reads
-	input_plasmid.like.tab	plasible plasmids identified in all nanopore reads
-	input_circular.tab	circular nanopore reads
+
 
 Example usage: bash argpore.sh -f test.fa -t 20
 EOF
@@ -133,39 +134,23 @@ echo "ARGpore2.0 is runing using parameters:
 Input contigs: $Input_fa
 Similarity cutoff for ARG identification: $Simcutoff
 Alignment length cutoff for ARG identification: $Lencuoff
-Similarity cutoff for Plasmid identification: 80 (default value, not user defined)
-Alignment length cutoff for Plasmid identification: 0.7 (default value, not user defined)
 Number of threads: $N_threads
 ---------------------------------------------------------------------
 "
 
 #####################################################################
-####### LAST against the SARG-nt
+####### LAST against the SARG-nt and ESCG database
 #####################################################################
-Query="${Input_fa2}"
-out=${Query}_sarg
+echo "
+----------------------------------------------------------------------------
+Start ARG quantification @ `date +"%Y-%m-%d %T"`"
 
-if [ ! -d $out ]; then
-        mkdir $out;
-else
-        echo "Warning: $out already exists. previous results are overwrited"
-		rm -rf $out
-		mkdir -p $out
-fi
+Query="${Input_fa2}"
+bash $DIR/bin/sarg.sh $Query $N_threads $DIR $Simcutoff $Lencuoff
 
 
 echo "
-searching $Query agaisnt SARG-nt with similarity cutoff $Simcutoff and alignment length cutoff $Lencuoff using $N_threads threads"
-
-
-${DIR}/bin/last-983/src/lastal -s 2 -T 0 -Q 0 -a 1 -P $N_threads -f BlastTab ${DIR}/database/SARG_20170328_5020.ffn $Query > /tmp/argpore_${nowt}_${Query}_tmp.blast
-
-echo "parsing SARG-nt last alignment"
-grep -v "#" /tmp/argpore_${nowt}_${Query}_tmp.blast > /tmp/argpore_${nowt}_${Query}_tmp.blast.modified
-
-ruby ${DIR}/bin/BlastTab.addlen.rb -s -f ${DIR}/database/SARG_20170328_5020.ffn < /tmp/argpore_${nowt}_${Query}_tmp.blast.modified > /tmp/argpore_${nowt}_${Query}_tmp.blast2
-
-ruby ${DIR}/bin/BlastTab.addlen.rb -f $Query < /tmp/argpore_${nowt}_${Query}_tmp.blast2 > ${out}/${Query}_sarg.last
+Finish ARG quantification @ `date +"%Y-%m-%d %T"`"
 
 
 ###############################################################
@@ -209,7 +194,17 @@ echo "Summarizing results in R @ `date +"%Y-%m-%d %T"`"
 Query=$Input_fa2
 out1=${Query}_sarg
 
-Rscript ${DIR}/bin/argpore.R ${out1}/${Query}_sarg.last $DIR/database/structure.RData ${Query}_taxa.tab $Simcutoff $Lencuoff ${Query}_plasmid.like ${Query}_arg.w.taxa.tab
+Rscript ${DIR}/bin/argpore.R \
+${out1}/${Query}_sarg.last \
+ ${out1}/${Query}_escg.last \
+ $N_threads \
+ $DIR/database/structure.RData \
+ ${Query}_taxa.tab \
+ $Simcutoff \
+ $Lencuoff \
+ ${Query}_plasmid.like.tab \
+ ${Query}_arg.w.taxa.tab \
+ ${Query}_arg.tab
 
 
 echo "
@@ -220,22 +215,25 @@ out=`echo "${Input_fa}_ARGpore2_${nowt}"`
 echo "moving results to $out"
 if [ ! -d $out ]; then 
 	mkdir $out;
+	mkdir $out/intermediate.files
 else 
 	rm -rf $out
 	mkdir -f $out
+	mkdir $out/intermediate.files
 
 fi
 
 mv ${Input_fa2} ${out}
-mv ${Input_fa2}_sarg ${out}
-mv ${Input_fa2}_marker ${out}
-mv ${Input_fa2}_KRAKEN ${out}
-mv ${Input_fa2}_taxator-tk ${out}
-mv ${Input_fa2}_Plasmid ${out}
-mv ${Input_fa2}_circular.contig.tsv ${out}
+mv ${Input_fa2}_sarg ${out}/intermediate.files
+mv ${Input_fa2}_marker ${out}/intermediate.files
+mv ${Input_fa2}_KRAKEN ${out}/intermediate.files
+mv ${Input_fa2}_taxator-tk ${out}/intermediate.files
+mv ${Input_fa2}_Plasmid ${out}/intermediate.files
+mv ${Input_fa2}_circular.tab ${out}
 mv ${Input_fa2}_arg.w.taxa.tab ${out}
-mv ${Input_fa2}_plasmid.like ${out}
+mv ${Input_fa2}_plasmid.like.tab ${out}
 mv ${Input_fa2}_taxa.tab ${out}
+mv ${Input_fa2}_arg.tab ${out}
 
 echo "
 done ARGpore @ `date +"%Y-%m-%d %T"`

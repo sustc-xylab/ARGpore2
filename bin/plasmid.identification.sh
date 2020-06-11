@@ -23,7 +23,7 @@ else
 fi
 
 ########### plasmid identification by Plasflow ####################
-echo "predict plasmid using plasflow with cutoff 0.95"
+echo "predict plasmid using plasflow with probability threshold of 0.95"
 # need this line to use conda in a script
 source ${CONDA_BASE}/etc/profile.d/conda.sh
 

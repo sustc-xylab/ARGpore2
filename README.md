@@ -17,7 +17,7 @@ Please read this manual carefully to avoid unnecessary errors for ARGpore implem
 	python2.7
 	GNU parallel
 	conda
-	R and library: plyr, data.table
+	R and library: plyr, data.table, doParallel,foreach
 
 ### Setup ARGpore2
 	
@@ -62,8 +62,8 @@ Download comprehensive database usually takes quite long time. please stay patie
 		
 		specify the path of the KRAKEN database in ARGpore_CONFIG
 	
-## Using ARGpore 
-Once download ARGpore package, all needed analysis is wrapped up in one executable named **ARGpore.sh**. Please **use bash instead of sh** to initiate ARGpore.
+## Using ARGpore2 
+Once download ARGpore2 package, all needed analysis is wrapped up in one executable named **ARGpore.sh**. Please **use bash instead of sh** to initiate argpore.sh.
 
 	bash $PATH_to_ARGpore/argpore.sh -f test.fa -t 60 > ARGpore.log
 
@@ -72,11 +72,15 @@ Once download ARGpore package, all needed analysis is wrapped up in one executab
 #### Output files 
 All output files of ARGpore are stored in a directory named $INPUT_FASTA_ARGpore_nowtime, main output files include:
 	
-	input_taxa.tab	phylogenetic assignment of nanopore reads by combining taxator-tk, KRAKEN and MetaPhlan2 marker gene 
-	input_arg.w.taxa.tab	ARGs-containing nanopore reads with valid taxonomy assignment and plausible plasmid identification
-	input_plasmid.like	plasible plasmids identified by combining Plasflow and last against PLSDB database
-	input_circular.tsv	circular nanopore reads identified by ccontigs
-	
+	input_arg.tab	ARG quntification (copy per cell)
+	input_arg.w.taxa.tab	ARGs-containing nanopore reads with taxonomy assignment and plausible plasmid identification
+	input_circular.tab	circular nanopore reads identified
+	input_plasmid.like.tab	plasmid-like nanopore reads identified
+	input_taxa.tab	taxonomy assignment of all nanopore reads
+
+plasmid-like nanopore reads are identified by firstly using plasflow to identify plasmids (probability threshold of 0.95), then plasflow-plasmids are further filtered by last against PLSDB (only hit showing alignment with > 80% similarity over 70% of its lenth to a known plasmid in PLSDB is considered as valid hit). **NOTICE**: This method cannot fully distinguish plasmids from chromosome, as a result, it only report plasmid-like nanopore reads in **input_plasmid.like.tab**. If such a plasmid-like nanopre read also showed circular nature as indicated in **Input_circular.tab**, it is more likely to be a real plasmid. 
+
+taxonomy annotation of nanopore reads were derived by combining results of taxator-tk, KRAKEN and MetaPhlan2 markergene database. If case of inconsistent annotations among these tools, ARGpore2 combines results with priority as markergene > taxator-tk > KRAKEN. 
 
 ## *Citation:*
 
