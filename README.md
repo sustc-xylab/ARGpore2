@@ -1,8 +1,8 @@
 # ARGpore2
 
-**ARG identification** from nanopore 1D/2D reads (fasta format) and then carried out **taxonomy and plasmid annotation** of ARG-containing long reads.
+**ARG identification** from nanopore 1D/2D reads (fasta format) and then carried out **taxonomy and plasmid annotation** of nanopore reads.
 
-Please read below instruction carefully to avoid unnecessary errors for ARGpore implementation.
+Please read below instructions carefully to avoid unnecessary errors.
 
 ## Installation 
 ### Pre-requisites for ARGpore 
@@ -18,12 +18,9 @@ Please read below instruction carefully to avoid unnecessary errors for ARGpore 
 	
 	cd ARGpore2
 	
-	bash setup.sh
+	bash setup.sh	
 
-
-The ARGpore_CONFIG contains the PATH for database required for ARGpore, this file should always be stored in the same directory with ARGpore.sh.
- 
-Before runing ARGpore, users should modify ARGpore_CONFIG with their specific database PATH
+The setup.sh will install ccontigs, blast+,  plasflow, kraken and then download SARG-nt,ESCG, MetaPhlan2 Markergene and PLSDB database for you. It will take quite some time to finish, please stay patient :)
 
 
 ### Database to prepare before ARGpore run 
@@ -54,11 +51,13 @@ Download comprehensive database usually takes quite long time. please stay patie
 		Replace "$DBNAME" with your preferred database name/location. 
 		
 		specify the path of the KRAKEN database in ARGpore_CONFIG
-	
+		
+The ARGpore_CONFIG contains the PATH for database required for ARGpore, this file should always be stored in the same directory with ARGpore.sh. Before runing ARGpore, users should **modify ARGpore_CONFIG with their specific database PATH**
+
 ## Using ARGpore2 
 Once download ARGpore2 package, all needed analysis is wrapped up in one executable named **ARGpore.sh**. Please **use bash instead of sh** to initiate argpore.sh.
 
-	bash $PATH_to_ARGpore/argpore.sh -f test.fa -t 60 > ARGpore.log
+	bash $PATH_to_ARGpore2/argpore.sh -f test.fa -t 60 > ARGpore.log
 
 
 	
@@ -73,7 +72,7 @@ All output files of ARGpore are stored in a directory named $INPUT_FASTA_ARGpore
 
 plasmid-like nanopore reads are identified by firstly using plasflow to identify plasmids (probability threshold of 0.95), then plasflow-plasmids are further filtered by last against PLSDB (only hit showing alignment with > 80% similarity over 70% of its lenth to a known plasmid in PLSDB is considered as valid hit). **NOTICE**: This method cannot fully distinguish plasmids from chromosome, as a result, it only report plasmid-like nanopore reads in **input_plasmid.like.tab**. If such a plasmid-like nanopre read also showed circular nature as indicated in **Input_circular.tab**, it is more likely to be a real plasmid. 
 
-taxonomy annotation of nanopore reads were derived by combining results of taxator-tk, KRAKEN and MetaPhlan2 markergene database. If case of inconsistent annotations among these tools, ARGpore2 combines results with priority as markergene > taxator-tk > KRAKEN. 
+Taxonomy annotation of nanopore reads were derived by combining results of taxator-tk, KRAKEN and MetaPhlan2 markergene database. If case of inconsistent annotations among these tools, ARGpore2 combines results with priority as markergene > taxator-tk > KRAKEN. 
 
 ## *Citation:*
 
