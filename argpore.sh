@@ -1,5 +1,5 @@
 #!/bin/bash
-## ARGpore is designed to identify ARGs and their host populations in nanopore dataset
+## ARGpore is designed to identify ARGs and their host in nanopore dataset
 ##Author: Yu XIA 2020-06-11
 ##Email: shuixia100@gmail.com
 ##version 2.0
@@ -138,34 +138,33 @@ Number of threads: $N_threads
 ---------------------------------------------------------------------
 "
 
-#####################################################################
-####### LAST against the SARG-nt and ESCG database
-#####################################################################
-echo "
-----------------------------------------------------------------------------
-Start ARG quantification @ `date +"%Y-%m-%d %T"`"
+# #####################################################################
+# ####### LAST against the SARG-nt and ESCG database
+# #####################################################################
+# echo "
+# ----------------------------------------------------------------------------
+# Start ARG quantification @ `date +"%Y-%m-%d %T"`"
 
-Query="${Input_fa2}"
-bash $DIR/bin/sarg.sh $Query $N_threads $DIR $Simcutoff $Lencuoff
+# Query="${Input_fa2}"
+# bash $DIR/bin/sarg.sh $Query $N_threads $DIR $Simcutoff $Lencuoff
 
-
-echo "
-Finish ARG quantification @ `date +"%Y-%m-%d %T"`"
-
-
-###############################################################
-####### taxonomy annotation of combined.fa by KRAKEN,taxator-tk and MetaPhlan 2 markergene
-###############################################################
-echo "
-----------------------------------------------------------------------------
-Start taxonomy annotatin @ `date +"%Y-%m-%d %T"`"
-
-Query="${Input_fa2}"
-bash $DIR/bin/taxator-tk_kraken.sh $Query $N_threads $DIR $Simcutoff $Lencuoff
+# echo "
+# Finish ARG quantification @ `date +"%Y-%m-%d %T"`"
 
 
-echo "
-Finish taxonomy annotation @ `date +"%Y-%m-%d %T"`"
+# ###############################################################
+# ####### taxonomy annotation of combined.fa by KRAKEN,taxator-tk and MetaPhlan 2 markergene
+# ###############################################################
+# echo "
+# ----------------------------------------------------------------------------
+# Start taxonomy annotatin @ `date +"%Y-%m-%d %T"`"
+
+# Query="${Input_fa2}"
+# bash $DIR/bin/taxator-tk_kraken.sh $Query $N_threads $DIR $Simcutoff $Lencuoff
+
+
+# echo "
+# Finish taxonomy annotation @ `date +"%Y-%m-%d %T"`"
 
 
 #########################################################
@@ -175,7 +174,7 @@ echo "-----------------------------------------------------------------------
 Start Plasmid identification @ `date +"%Y-%m-%d %T"`
 "
 Query="${Input_fa2}.orfs.faa"
-bash ${DIR}/bin/plasmid.identification.sh ${Input_fa2} ${DIR} $N_threads $Query 
+bash ${DIR}/bin/plasmid.identification.sh ${Input_fa2} ${DIR} $N_threads $Query $nowt
 echo "
 Finish Plasmid identification @ `date +"%Y-%m-%d %T"`"
 

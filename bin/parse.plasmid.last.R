@@ -125,7 +125,7 @@ if(length(plasmid.c)>0){
 	
 	write.table(plasmid.d,file=args[6],sep="\t",quote=F, row.names=F)
 } else {
-	cat("	No plasmid hit against refseq_plasmid database\n")
+	cat("	No plasmid hit against PLSDB database\n")
 }
 
 

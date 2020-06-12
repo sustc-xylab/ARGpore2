@@ -5,6 +5,7 @@ set -e
 Query=${1}
 DIR=${2}
 N_threads=$3
+nowt=$5
 CONDA_BASE=$(conda info --base)
 
 out=${Query}_Plasmid
@@ -32,9 +33,33 @@ conda activate plasflow
 Query=$1
 out=${Query}_Plasmid
 plasflow_cutoff="0.95"
-PATH=/home/sustc-xy/miniconda2/envs/plasflow/bin:$PATH
+PATH=${CONDA_BASE}/envs/plasflow/bin:$PATH
 
-PlasFlow.py --input ${Query} --output ${out}/${Query}_plasflow --threshold ${plasflow_cutoff}
+
+n=`grep ">" ${Query} | wc -l`
+if [ $n -gt 10000 ]; then
+	n2=`echo $(($n/10000))`
+	echo "split $Query into $n2 pices to run PlasFlow"
+	${DIR}/bin/FastA.split.pl ${Query} /tmp/${Query}_${nowt}.split $n2
+	
+	rm -f tmp.plasflow_${nowt}.jobs
+	find /tmp -name "${Query}_${nowt}.split*.fa" | while read line
+	do 
+		PlasFlow.py --input ${line} --output ${line}_plasflow --threshold ${plasflow_cutoff} &
+		PID=$!
+		echo "$PID" >> tmp.plasflow_${nowt}.jobs
+	done
+	
+	bash $DIR/bin/monitor.bgpid.sh tmp.plasflow_${nowt}.jobs
+	rm -f tmp.plasflow_${nowt}.jobs
+	
+	cat /tmp/${Query}_${nowt}.split*.fa_plasflow_plasmids.fasta > ${out}/${Query}_plasflow_plasmids.fasta
+	cat /tmp/${Query}_${nowt}.split*.fa_plasflow_chromosomes.fasta > ${out}/${Query}_plasflow_chromosomes.fasta
+	cat /tmp/${Query}_${nowt}.split*.fa_plasflow_unclassified.fasta > ${out}/${Query}_plasflow_unclassified.fasta
+	rm -f /tmp/${Query}_${nowt}.split*
+else
+	PlasFlow.py --input ${Query} --output ${out}/${Query}_plasflow --threshold ${plasflow_cutoff} --batch_size 2000
+fi
 
 grep ">" ${out}/${Query}_plasflow_plasmids.fasta | sed 's/>//' | cut -d " " -f 1 > ${out}/${Query}_plasflow.tab
 
@@ -48,7 +73,7 @@ if [ -s ${out}/${Query}_plasflow.tab ]; then
 	Query=$1
 	Simcutoff=0.8
 	
-	echo "last agaisnt PLSDB database using similarity cutoff $Simcutoff"
+	echo "last agaisnt PLSDB database using similarity cutoff $Simcutoff length cutoff 0.7"
 	${DIR}/bin/last-983/scripts/parallel-fasta "${DIR}/bin/last-983/src/lastal -s 2 -T 0 -Q 0 -a 1 -P ${N_threads} -f BlastTab ${Plasdb}" < ${Query} > ${out}/${Query}_last.plasmid.tab 
 
 	grep -v "#" ${out}/${Query}_last.plasmid.tab  > /tmp/${nowt}_${Query}_tmp.modified
