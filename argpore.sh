@@ -103,30 +103,35 @@ shift "$((OPTIND-1))"
 myarray=(`echo $Input_fa| tr "/" " "`) 
 Input_fa2=${myarray[-1]}
 
+echo "remove nanopore reads with duplicated name"
+$DIR/bin/seqkit rmdup -n $Input_fa2 -o ${Input_fa2}.uniq
+
+Input_fa2=${Input_fa2}.uniq
+
 echo "----------------------------------------------------------------------
-start ARGpore @ `date +"%Y-%m-%d %T"`"
+start ARGpore @ `date +"%Y-%m-%d %T"`
+"
 
 echo "ARGpore2.0 is runing using parameters:
---------------------------------------------------------------------
-Input contigs: $Input_fa
+Input fasta: $Input_fa2
 Similarity cutoff for ARG identification: $Simcutoff
 Alignment length cutoff for ARG identification: $Lencuoff
 Number of threads: $N_threads
 ---------------------------------------------------------------------
 "
 
-#####################################################################
-####### LAST against the SARG-nt and ESCG database
-#####################################################################
-echo "
-----------------------------------------------------------------------------
-Start ARG quantification @ `date +"%Y-%m-%d %T"`"
+# #####################################################################
+# ####### LAST against the SARG-nt and ESCG database
+# #####################################################################
+# echo "
+# ----------------------------------------------------------------------------
+# Start ARG quantification @ `date +"%Y-%m-%d %T"`"
 
-Query="${Input_fa2}"
-bash $DIR/bin/sarg.sh $Query $N_threads $DIR $Simcutoff $Lencuoff
+# Query="${Input_fa2}"
+# bash $DIR/bin/sarg.sh $Query $N_threads $DIR $Simcutoff $Lencuoff
 
-echo "
-Finish ARG quantification @ `date +"%Y-%m-%d %T"`"
+# echo "
+# Finish ARG quantification @ `date +"%Y-%m-%d %T"`"
 
 
 ###############################################################
@@ -137,7 +142,7 @@ echo "
 Start taxonomy annotatin @ `date +"%Y-%m-%d %T"`"
 
 Query="${Input_fa2}"
-bash $DIR/bin/taxator-tk_kraken.sh $Query $N_threads $DIR $Simcutoff $Lencuoff
+bash $DIR/bin/taxator-tk_kraken.sh $Query $N_threads $DIR $Simcutoff $Lencuoff $nowt
 
 
 echo "

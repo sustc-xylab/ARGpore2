@@ -8,7 +8,8 @@ N_threads=$2
 DIR=$3
 Simcutoff=$4
 Lencuoff=$5
-nowt=`date +%Y-%m-%d.%H:%M:%S`;
+nowt=$6
+
 out=${Query}_taxator-tk
 
 BLASTDB=`grep "BLASTDB" ${DIR}/ARGpore_CONFIG | head -1 | sed 's/BLASTDB=//'`
@@ -30,12 +31,20 @@ fi
 
 
 echo "
-aligning $Query to ${BLASTDB} database with MEGABLAST. This could be slow, please stay patient. You may look at the classification progress in ${out}/megablast_out.raw.tab
-"
+aligning $Query to ${BLASTDB} database with MEGABLAST. This is the slowest step, please stay patient.We will check the progress of megablast every one minute for you:" 
+
+rm -f tmp.megablast.jobs
 $DIR/bin/ncbi-blast-2.9.0+/bin/blastn -task megablast -num_threads $N_threads\
  -db ${BLASTDB}\
  -outfmt '6 qseqid qstart qend qlen sseqid staxids sstart send bitscore evalue nident length'\
- -query ${Query} > ${out}/megablast_out.raw.tab
+ -query ${Query} > ${out}/megablast_out.raw.tab &
+PID=$!
+echo "$PID" >> tmp.megablast.jobs
+
+echo ""
+touch ${out}/megablast_out.raw.tab
+bash $DIR/bin/blastab_monitor.sh ${out}/megablast_out.raw.tab $Query tmp.megablast.jobs
+rm -f tmp.megablast.jobs
 
 echo "removing unnecessary lines that lead to bad tax IDs (without a proper rank)"
 
