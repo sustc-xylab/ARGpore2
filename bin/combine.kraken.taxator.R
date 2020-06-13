@@ -55,33 +55,40 @@ merge.taxa<-function(k,t){
 	# k as the basis to merge in t, taxa from t is merged in only when t's above level taxa is equal to k
 
 	m<-merge(k,t, by="contig", all=T)
-
+	m[is.na(m)]<-""
+	m<-as.data.frame(m)
 	for(i in 1:length(rank)){
-		x<-paste(rank[i],"x",sep=".") # corespond to k
+		#target level
+		x<-paste(rank[i],"x",sep=".") # corespond to k 
 		y<-paste(rank[i],"y",sep=".") # corespond to t
 		lookat<-which(m[,x]=="")
-		if(i==1) {m[,x][lookat]<-m[,y][lookat]} 
+		if(i==1) {
+		m[,rank[i]]<-m[,x]
+		m[,rank[i]][lookat]<-m[,y][lookat]
+		} 
 		else {
+			# previous level
 			x2<-paste(rank[i-1],"x",sep=".") # corespond to k
 			y2<-paste(rank[i-1],"y",sep=".") # corespond to t
 			lookat2<-which(m[,x2]==m[,y2])
 			lookat3<-intersect(lookat,lookat2)
-			if(length(lookat3)>0) {m[,x][lookat3]<-m[,y][lookat3]}
+			if(length(lookat3)>0) {
+			m[,rank[i]]<-m[,x]
+			m[,rank[i]][lookat3]<-m[,y][lookat3]}
 		}
 	}
-	m<-m[,1:8]
+	# m<-m[,1:8]
+	m<-m[,c("contig",rank)]
 	colnames(m)<-c("contig",rank)
 	return(m)
 }
 
 # use which markergene as basis to merge in taxator,
 # merge in taxa from taxator only when taxator's above level taxa is equal to markergene
-m<-merge.taxa(data.frame(taxa),data.frame(taxator))
-m[is.na(m)]<-""
+m<-merge.taxa(data.frame(kraken),data.frame(taxator))
 
 # use markergene+taxator as basis to merge in kraken 
-m2<-merge.taxa(m,data.frame(kraken))
-m2[is.na(m2)]<-""
+m2<-merge.taxa(m,data.frame(taxa))
 write.table(m2,file=args[8],row.name=F,col.name=T, quote=F, sep="\t")
 
 #### print out the unclassified ratio########
@@ -93,7 +100,8 @@ for(i in 1:length(rank)){
 t<-matrix(c,ncol=length(rank))
 colnames(t)<-rank
 rownames(t)<-c("unclassified ratio")
-print(t)
+classified<-paste(args[8],"_unclassified.ratio.tab",sep="")
+write.table(t,file=classified,row.name=T,col.name=T, quote=F, sep="\t")
 
 
-	
+

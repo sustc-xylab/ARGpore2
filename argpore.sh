@@ -20,7 +20,7 @@ arguments:
 	-l	alignment length cutoff [0-1] for filtering ARG lastal results
 		default alignment length cutoff is 0.9
 
-	-t 	number of threads used for lastal, default t=1
+	-t	number of threads used for parallel computiong, default t=1
 
 
 output files:
@@ -40,23 +40,18 @@ EOF
 ####################
 OPTIND=1  # Reset in case getopts has been used previously in the shell.
 
-# initialize your own variables:
+# initial value of variables
 N_threads="1"
 Input_fa=""
 Lencuoff="0.9"
 Simcutoff="70"
-Output=$Input_fa
 nowt=`date +%Y-%m-%d.%H:%M:%S`;
-# nowt="2018-05-17.08:52:33"
-# the DIR of argpore scirpt
-# DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-# echo $DIR
 SCRIPT=`realpath $0`
 DIR=`dirname $SCRIPT`
 
 while getopts "t:f:l:s:o:h" opt; do
 	case "$opt" in
-		h|--help)
+		h)
 			show_help
 			exit 0
 			;;
@@ -71,9 +66,6 @@ while getopts "t:f:l:s:o:h" opt; do
 			;;
 		s)
 			Simcutoff=`echo "$OPTARG*100"|bc`
-			;;
-		o)
-			Output=$OPTARG
 			;;
 		\?)
 			echo "Invalid option: -$OPTARG" >&2
@@ -102,22 +94,7 @@ then
 	echo "No input fasta, -f must be specified"
 	exit
 fi
-if [ -z "$Output" ]
-then
-	Output=$Input_fa
-fi
-if [ -z "$Simcutoff" ]
-then
-	Simcutoff="70"
-fi
-if [ -z "$Lencuoff" ]
-then
-	Lencuoff="0.9"
-fi
-if [ -z "$N_threads" ]
-then
-	N_threads=1
-fi
+
 shift "$((OPTIND-1))"
 # echo $Input_fa $Simcutoff $Lencuoff $N_threads $Output $DIR $nowt
 
@@ -138,33 +115,33 @@ Number of threads: $N_threads
 ---------------------------------------------------------------------
 "
 
-# #####################################################################
-# ####### LAST against the SARG-nt and ESCG database
-# #####################################################################
-# echo "
-# ----------------------------------------------------------------------------
-# Start ARG quantification @ `date +"%Y-%m-%d %T"`"
+#####################################################################
+####### LAST against the SARG-nt and ESCG database
+#####################################################################
+echo "
+----------------------------------------------------------------------------
+Start ARG quantification @ `date +"%Y-%m-%d %T"`"
 
-# Query="${Input_fa2}"
-# bash $DIR/bin/sarg.sh $Query $N_threads $DIR $Simcutoff $Lencuoff
+Query="${Input_fa2}"
+bash $DIR/bin/sarg.sh $Query $N_threads $DIR $Simcutoff $Lencuoff
 
-# echo "
-# Finish ARG quantification @ `date +"%Y-%m-%d %T"`"
-
-
-# ###############################################################
-# ####### taxonomy annotation of combined.fa by KRAKEN,taxator-tk and MetaPhlan 2 markergene
-# ###############################################################
-# echo "
-# ----------------------------------------------------------------------------
-# Start taxonomy annotatin @ `date +"%Y-%m-%d %T"`"
-
-# Query="${Input_fa2}"
-# bash $DIR/bin/taxator-tk_kraken.sh $Query $N_threads $DIR $Simcutoff $Lencuoff
+echo "
+Finish ARG quantification @ `date +"%Y-%m-%d %T"`"
 
 
-# echo "
-# Finish taxonomy annotation @ `date +"%Y-%m-%d %T"`"
+###############################################################
+####### taxonomy annotation of combined.fa by KRAKEN,taxator-tk and MetaPhlan 2 markergene
+###############################################################
+echo "
+----------------------------------------------------------------------------
+Start taxonomy annotatin @ `date +"%Y-%m-%d %T"`"
+
+Query="${Input_fa2}"
+bash $DIR/bin/taxator-tk_kraken.sh $Query $N_threads $DIR $Simcutoff $Lencuoff
+
+
+echo "
+Finish taxonomy annotation @ `date +"%Y-%m-%d %T"`"
 
 
 #########################################################
@@ -206,36 +183,36 @@ ${out1}/${Query}_sarg.last \
  ${Query}_arg.tab
 
 
-echo "
------------------------------------------------------------------
-Saving ARGpore results 
-"
-out=`echo "${Input_fa}_ARGpore2_${nowt}"`
-echo "moving results to $out"
-if [ ! -d $out ]; then 
-	mkdir $out;
-	mkdir $out/intermediate.files
-else 
-	rm -rf $out
-	mkdir -f $out
-	mkdir $out/intermediate.files
+# echo "
+# -----------------------------------------------------------------
+# Saving ARGpore results 
+# "
+# out=`echo "${Input_fa}_ARGpore2_${nowt}"`
+# echo "moving results to $out"
+# if [ ! -d $out ]; then 
+	# mkdir $out;
+	# mkdir $out/intermediate.files
+# else 
+	# rm -rf $out
+	# mkdir -f $out
+	# mkdir $out/intermediate.files
 
-fi
+# fi
 
-mv ${Input_fa2} ${out}
-mv ${Input_fa2}_sarg ${out}/intermediate.files
-mv ${Input_fa2}_marker ${out}/intermediate.files
-mv ${Input_fa2}_KRAKEN ${out}/intermediate.files
-mv ${Input_fa2}_taxator-tk ${out}/intermediate.files
-mv ${Input_fa2}_Plasmid ${out}/intermediate.files
-mv ${Input_fa2}_circular.tab ${out}
-mv ${Input_fa2}_arg.w.taxa.tab ${out}
-mv ${Input_fa2}_plasmid.like.tab ${out}
-mv ${Input_fa2}_taxa.tab ${out}
-mv ${Input_fa2}_arg.tab ${out}
+# mv ${Input_fa2} ${out}
+# mv ${Input_fa2}_sarg ${out}/intermediate.files
+# mv ${Input_fa2}_marker ${out}/intermediate.files
+# mv ${Input_fa2}_KRAKEN ${out}/intermediate.files
+# mv ${Input_fa2}_taxator-tk ${out}/intermediate.files
+# mv ${Input_fa2}_Plasmid ${out}/intermediate.files
+# mv ${Input_fa2}_circular.tab ${out}
+# mv ${Input_fa2}_arg.w.taxa.tab ${out}
+# mv ${Input_fa2}_plasmid.like.tab ${out}
+# mv ${Input_fa2}_taxa.tab ${out}
+# mv ${Input_fa2}_arg.tab ${out}
 
-echo "
-done ARGpore @ `date +"%Y-%m-%d %T"`
---------------------------------------------------------------------
-"
+# echo "
+# done ARGpore @ `date +"%Y-%m-%d %T"`
+# --------------------------------------------------------------------
+# "
 

@@ -120,7 +120,7 @@ escg.filter<-function(df,S=70,L=0.9,no_threads=1){
   library(plyr)
   
   colnames(df)<-c("query","subject","similarity","align.lenth","mismatch","gap","q.start","q.end","s.start","s.end","evalue","bitscore","s.len","q.len")
-  df$query<-sapply(strsplit(as.character(df$query),"-"),"[[",1)
+  # df$query<-sapply(strsplit(as.character(df$query),"-"),"[[",1)
   df$ko<-sapply(strsplit(as.character(df$subject),"::"),"[[",2)
   # filtering hit based on similarity & alignment length of the ESCG length
   lookat<-which(df$similarity>S & df$align.lenth/df$s.len>L)
@@ -204,8 +204,8 @@ escg.filter<-function(df,S=70,L=0.9,no_threads=1){
   # calclate no_c based on df.filtered
   cat("\nCalculating cell number based on KO annotation \n")
   tmp.ko<-table(df.filtered$ko)
-  no_c<-mean(tmp.ko) 
-  result2<-list(df.filtered=df.filtered, no_c=no_c)
+  # no_c<-mean(tmp.ko) 
+  result2<-list(df.filtered=df.filtered, no_c=tmp.ko)
   return(result2)
 }
 
@@ -216,7 +216,8 @@ escg.f<-escg.filter(escg,
 				no_threads=no_threads
 )
 
-NO.c<-escg.f$no_c
+# cell number estimation qual to ESCG showing the largest copy 
+NO.c<-max(escg.f$no_c)
 
 ###############
 # combine ARG profile with taxa profile
@@ -228,7 +229,7 @@ NO.c<-escg.f$no_c
 if(nrow(arg.f)>0){
 	arg.w.taxa<-merge(arg.f,taxa,by="query",all.x=T)
 	arg.w.taxa<-merge(arg.w.taxa,plasmid,by="query",all.x=T)
-	
+	arg.w.taxa[is.na(arg.w.taxa)]<-""
 	arg.c<-aggregate( query~subtype+type,arg.w.taxa,length)
 	arg.c$copy.per.cell<-arg.c$query/NO.c
 	colnames(arg.c)[3]<-c("No.reads")

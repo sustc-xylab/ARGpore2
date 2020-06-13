@@ -72,7 +72,7 @@ All output files of ARGpore are stored in a directory named $INPUT_FASTA_ARGpore
 
 plasmid-like nanopore reads are identified by firstly using plasflow to identify plasmids (probability threshold of 0.95), then plasflow-plasmids are further filtered by last against PLSDB (only hit showing alignment with > 80% similarity over 70% of its lenth to a known plasmid in PLSDB is considered as valid hit). **NOTICE**: This method cannot fully distinguish plasmids from chromosome, as a result, it only report plasmid-like nanopore reads in **input_plasmid.like.tab**. If such a plasmid-like nanopre read also showed circular nature as indicated in **Input_circular.tab**, it is more likely to be a real plasmid. 
 
-Taxonomy annotation of nanopore reads were derived by combining results of taxator-tk, KRAKEN and MetaPhlan2 markergene database. If case of inconsistent annotations among these tools, ARGpore2 combines results with priority as markergene > taxator-tk > KRAKEN. 
+Taxonomy annotation of nanopore reads were derived by combining results of taxator-tk, KRAKEN and MetaPhlan2 markergene database. If case of inconsistent annotations among these tools, to maximize classification ratio, ARGpore2 combines results with priority as kraken > taxator-tk > markergene. 
 
 ## *Citation:*
 

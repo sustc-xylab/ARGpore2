@@ -71,7 +71,7 @@ if [ -s ${out}/${Query}_plasflow.tab ]; then
 	echo "
 	further filter plasmids by last agaisnt PLSDB database"
 	Query=$1
-	Simcutoff=0.8
+	Simcutoff=0.7
 	
 	echo "last agaisnt PLSDB database using similarity cutoff $Simcutoff length cutoff 0.7"
 	${DIR}/bin/last-983/scripts/parallel-fasta "${DIR}/bin/last-983/src/lastal -s 2 -T 0 -Q 0 -a 1 -P ${N_threads} -f BlastTab ${Plasdb}" < ${Query} > ${out}/${Query}_last.plasmid.tab 
@@ -90,4 +90,3 @@ else
 	echo "
 	No Plasmid identified"
 fi
-
