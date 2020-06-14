@@ -11,6 +11,7 @@ Please read below instructions carefully to avoid unnecessary errors.
 	GNU parallel
 	conda
 	R and library: plyr, data.table, doParallel,foreach
+	git lfs ### curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
 
 ### Setup ARGpore2
 	

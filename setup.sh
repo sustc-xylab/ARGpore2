@@ -39,6 +39,7 @@ cd ${DIR}/database
 # MetaPhlan2.0 markergene database ##############################
 echo "
 Downloading Metaphlan2 markergene database from git lfs"
+
 git lfs install
 git lfs pull
 
@@ -88,7 +89,8 @@ rm PLSDB.zip
 
 
 # make last database using PLSDB database
-echo "Building lastdb for PLSDB, this step is quite slow, please stay patient"
+echo "
+Building lastdb for PLSDB, this step is quite slow, please stay patient :)"
 ${DIR}/bin/last-983/src/lastdb -Q 0 PLSDB_2020_03_04.fna.lastindex PLSDB_2020_03_04.fna -P 50
 
 
