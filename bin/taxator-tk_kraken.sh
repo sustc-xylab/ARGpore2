@@ -33,18 +33,18 @@ fi
 echo "
 aligning $Query to ${BLASTDB} database with MEGABLAST. This is the slowest step, please stay patient.We will check the progress of megablast every one minute for you:" 
 
-rm -f tmp.megablast.jobs
+rm -f ${Query}_tmp.megablast.jobs
 $DIR/bin/ncbi-blast-2.9.0+/bin/blastn -task megablast -num_threads $N_threads\
  -db ${BLASTDB}\
  -outfmt '6 qseqid qstart qend qlen sseqid staxids sstart send bitscore evalue nident length'\
  -query ${Query} > ${out}/megablast_out.raw.tab &
 PID=$!
-echo "$PID" >> tmp.megablast.jobs
+echo "$PID" >> ${Query}_tmp.megablast.jobs
 
 echo ""
 touch ${out}/megablast_out.raw.tab
-bash $DIR/bin/blastab_monitor.sh ${out}/megablast_out.raw.tab $Query tmp.megablast.jobs
-rm -f tmp.megablast.jobs
+bash $DIR/bin/blastab_monitor.sh ${out}/megablast_out.raw.tab $Query ${Query}_tmp.megablast.jobs
+rm -f ${Query}_tmp.megablast.jobs
 
 echo "removing unnecessary lines that lead to bad tax IDs (without a proper rank)"
 
