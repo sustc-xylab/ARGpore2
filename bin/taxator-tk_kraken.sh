@@ -138,4 +138,4 @@ out1=${Query}_taxator-tk
 out2=${Query}_KRAKEN
 out3=${Query}_marker
 
-Rscript ${DIR}/bin/combine.kraken.taxator.R ${DIR}/database/lineages-2019-02-20.csv ${out2}/combined.krak ${out1}/contig_taxonomy.tab.modified ${out3}/${Query}_marker.last $DIR/database/taxa.info.RData $Simcutoff $Lencuoff  ${Query}_taxa.tab
+Rscript ${DIR}/bin/combine.kraken.taxator.R ${DIR}/database/2020-06-16_lineage.tab ${out2}/combined.krak ${out1}/contig_taxonomy.tab.modified ${out3}/${Query}_marker.last $DIR/database/taxa.info.RData $Simcutoff $Lencuoff  ${Query}_taxa.tab

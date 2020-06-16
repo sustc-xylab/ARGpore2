@@ -6,12 +6,15 @@ Please read below instructions carefully to avoid unnecessary errors.
 
 ## Installation 
 ### Pre-requisites for ARGpore 
-	ruby 2.3.1p112
-	python2.7
-	GNU parallel
-	conda
-	R and library: plyr, data.table, doParallel,foreach
-	git lfs ### curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+	
+	ruby 2.3.1p112	### sudo apt install ruby-full
+	python2.7	### sudo apt install python2.7
+	GNU parallel	### sudo apt install parallel
+	git lfs	        ### sudo apt install git-lfs
+	
+	R and library: plyr, data.table, doParallel, foreach
+	plasflow via conda
+	
 
 ### Setup ARGpore2
 	
@@ -19,9 +22,9 @@ Please read below instructions carefully to avoid unnecessary errors.
 	
 	cd ARGpore2
 	
-	bash setup.sh	
+	bash ./setup.sh	
 
-The setup.sh will install ccontigs, blast+,  plasflow, kraken and then download SARG-nt,ESCG, MetaPhlan2 Markergene and PLSDB database for you. It will take quite some time to finish, please stay patient :)
+The setup.sh will install ccontigs, blast+, kraken and then download MetaPhlan2 Markergene and PLSDB database for you. It will take at least 5 hour to finish, please stay patient :)
 
 
 ### Database to prepare before ARGpore run 

@@ -6,8 +6,8 @@ library(data.table)
 
 
 lineage<-fread(args[1])
-colnames(lineage)[2]<-"kingdom"
-lineage<-lineage[,c("tax_id","kingdom","phylum","class","order","family","genus","species")]
+colnames(lineage)<-c("tax_id","kingdom","phylum","class","order","family","genus","species")
+# lineage<-lineage[,c("tax_id","kingdom","phylum","class","order","family","genus","species")]
 
 krak<-fread(args[2],header=F)
 krak<-krak[,2:3]

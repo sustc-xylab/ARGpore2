@@ -90,3 +90,5 @@ else
 	echo "
 	No Plasmid identified"
 fi
+
+rm -f ${out}/${Query}_last.plasmid.tab_wlength
