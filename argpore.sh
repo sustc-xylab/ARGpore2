@@ -142,7 +142,7 @@ echo "
 Start taxonomy annotatin @ `date +"%Y-%m-%d %T"`"
 
 Query="${Input_fa2}"
-bash $DIR/bin/taxator-tk_kraken.sh $Query $N_threads $DIR $Simcutoff $Lencuoff $nowt
+bash $DIR/bin/kraken_marker.sh $Query $N_threads $DIR $Simcutoff $Lencuoff $nowt
 
 
 echo "
@@ -208,13 +208,15 @@ mv ${Input_fa2} ${out}
 mv ${Input_fa2}_sarg ${out}/intermediate.files
 mv ${Input_fa2}_marker ${out}/intermediate.files
 mv ${Input_fa2}_KRAKEN ${out}/intermediate.files
-mv ${Input_fa2}_taxator-tk ${out}/intermediate.files
+# mv ${Input_fa2}_taxator-tk ${out}/intermediate.files
 mv ${Input_fa2}_Plasmid ${out}/intermediate.files
 mv ${Input_fa2}_circular.tab ${out}
 mv ${Input_fa2}_arg.w.taxa.tab ${out}
+mv ${Input_fa2}_taxa.tab_unclassified.ratio.tab ${out}
 mv ${Input_fa2}_plasmid.like.tab ${out}
 mv ${Input_fa2}_taxa.tab ${out}
 mv ${Input_fa2}_arg.tab ${out}
+
 
 echo "
 done ARGpore @ `date +"%Y-%m-%d %T"`

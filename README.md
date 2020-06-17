@@ -1,6 +1,8 @@
 # ARGpore2
 
-**ARG identification** from nanopore 1D/2D reads (fasta format) and then carried out **taxonomy and plasmid annotation** of nanopore reads.
+**ARGs identification** from nanopore 1D/2D reads (fasta format) 
+
+ARGpore2 is a easy-to-use bioinformatics pipeline which codifies the current beat-practice for identify antibiotic resistance genes (ARGs) and its host populations from nanopore reads.
 
 Please read below instructions carefully to avoid unnecessary errors.
 
@@ -30,22 +32,7 @@ The setup.sh will install ccontigs, blast+, kraken and then download MetaPhlan2 
 ### Database to prepare before ARGpore run 
 
 Download comprehensive database usually takes quite long time. please stay patient :)
- 
 
-	** NCBI nt database for BLAST+ and nodes.dmp of corresponding taxonomy ** 
-		
-		1. download NCBI preformatted nt database with:
-			
-			perl  $PATH_to_ARGpore/bin/ncbi-blast-2.9.0+/bin/update_blastdb.pl --passive --decompress nt
-			
-		specify the name of the nt database in ARGpore_CONFIG
-		
-		2. download NCBI taxonomy with：
-			
-			wget ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz
-		
-		Place the files names.dmp and nodes.dmp in a folder and specify its path in ARGpore_CONFIG. keep in mind that the taxonomy files are modified on a regular basis.  
-		
 	** Default database of KRAKEN **
 		
 		To create the standard Kraken database, you can use the following command:
@@ -76,7 +63,7 @@ All output files of ARGpore are stored in a directory named $INPUT_FASTA_ARGpore
 
 plasmid-like nanopore reads are identified by firstly using plasflow to identify plasmids (probability threshold of 0.95), then plasflow-plasmids are further filtered by last against PLSDB (only hit showing alignment with > 80% similarity over 70% of its lenth to a known plasmid in PLSDB is considered as valid hit). **NOTICE**: This method cannot fully distinguish plasmids from chromosome, as a result, it only report plasmid-like nanopore reads in **input_plasmid.like.tab**. If such a plasmid-like nanopre read also showed circular nature as indicated in **Input_circular.tab**, it is more likely to be a real plasmid. 
 
-Taxonomy annotation of nanopore reads were derived by combining results of taxator-tk, KRAKEN and MetaPhlan2 markergene database. If case of inconsistent annotations among these tools, to maximize classification ratio, ARGpore2 combines results with priority as kraken > taxator-tk > markergene. 
+Taxonomy annotation of nanopore reads were derived by combining results of KRAKEN and MetaPhlan2 markergene database. If case of inconsistent annotations among these tools, to maximize classification ratio, ARGpore2 combines results with priority as kraken > markergene. 
 
 ## *Citation:*
 

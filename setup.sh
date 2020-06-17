@@ -7,7 +7,7 @@ DIR=`dirname $SCRIPT`
 cd ${DIR}/bin
 
 ########## seqkit
-echo "Installing seqkit
+echo "Installing seqkit ---------------------------------------------------------------------
 "
 wget https://github.com/shenwei356/seqkit/releases/download/v0.12.1/seqkit_linux_amd64.tar.gz
 tar -zxvf seqkit_linux_amd64.tar.gz
@@ -15,7 +15,7 @@ rm seqkit_linux_amd64.tar.gz
 
 ############ blast+ 2.9.0
 echo ""
-echo "Installing blast+2.9.0
+echo "Installing blast+2.9.0 ---------------------------------------------------------------------
 "
 wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.9.0/ncbi-blast-2.9.0+-x64-linux.tar.gz
 tar -zvxf ncbi-blast-2.9.0+-x64-linux.tar.gz
@@ -26,7 +26,7 @@ if [ -d kraken ]; then
         rm -rf kraken
 fi
 echo ""
-echo "Installing kraken
+echo "Installing kraken ---------------------------------------------------------------------
 "
 git clone https://github.com/DerrickWood/kraken.git
 cd kraken
@@ -35,7 +35,7 @@ cd ..
 
 ############# ccontigs #####
 echo "
-Installing ccontigs
+Installing ccontigs ---------------------------------------------------------------------
 "
 if [ -d ccontigs ]; then
         rm -rf ccontigs
@@ -45,7 +45,7 @@ wget https://julialang-s3.julialang.org/bin/linux/x64/1.4/julia-1.4.2-linux-x86_
 tar -xvzf julia-1.4.2-linux-x86_64.tar.gz
 rm -f julia-1.4.2-linux-x86_64.tar.gz
 
-echo "Finish install required tools
+echo "Finish install required tools 
 ------------------------------------------------------------------"
 cd ${DIR}/database
 # MetaPhlan2.0 markergene database ##############################
@@ -83,6 +83,7 @@ echo "
 Downloading lineage information for NCBI taxonomy"
 
 tar jxvf ${DIR}/database/2020-06-16_lineage.tab.tar.xz
+rm -f 2020-06-16_lineage.tab.tar.xz
 
 ######### PLSDB database #################################
 echo "
