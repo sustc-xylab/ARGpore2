@@ -86,6 +86,8 @@ echo "
 Downloading lineage information for NCBI taxonomy"
 
 tar jxvf 2020-06-16_lineage.tab.tar.xz
+mv database/2020-06-16_lineage.tab . 
+rm -rf database
 
 ######### PLSDB database #################################
 echo "
