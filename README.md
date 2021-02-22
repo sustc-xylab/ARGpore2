@@ -13,7 +13,6 @@ Please read below instructions carefully to avoid unnecessary errors.
 	python2.7	### sudo apt install python2.7
 	GNU parallel	### sudo apt install parallel
 	git lfs	        ### sudo apt install git-lfs
-	
 	R and library: plyr, data.table, doParallel, foreach
 	plasflow via conda
 	
@@ -26,24 +25,12 @@ Please read below instructions carefully to avoid unnecessary errors.
 	
 	bash ./setup.sh	
 
-The setup.sh will install ccontigs, blast+, kraken and then download MetaPhlan2 Markergene and PLSDB database for you. It will take at least 5 hour to finish, please stay patient :)
+The setup.sh will install ccontigs, blast+, Centrifuge and then download bacteria+archaea+virus database for Centrifuge, MetaPhlan2 Markergene and PLSDB database for you. It will take at least 1 hour to finish, please stay patient :)
 
 
-### Database to prepare before ARGpore run 
 
-Download comprehensive database usually takes quite long time. please stay patient :)
 
-	** Default database of KRAKEN **
-		
-		To create the standard Kraken database, you can use following command:
-		
-			$PATH_to_ARGpore/bin/kraken/kraken-build --standard --threads 24 --db $DBNAME
-		
-		Replace "$DBNAME" with your preferred database name/location. 
-		
-		Specify the path of the KRAKEN database in ARGpore_CONFIG
-		
-ARGpore_CONFIG contains the PATH for database required for ARGpore, this file should always be stored in the same directory with ARGpore.sh. Before runing ARGpore, users should **modify ARGpore_CONFIG with their specific database PATH**
+
 
 ## Using ARGpore2 
 Once download ARGpore2 package, all needed analysis is wrapped up in one executable named **argpore.sh**. Please **use bash instead of sh** to initiate argpore.sh.
@@ -63,7 +50,7 @@ All output files of ARGpore are stored in a directory named $INPUT_FASTA_ARGpore
 
 plasmid-like nanopore reads are identified by firstly using plasflow to identify plasmids (probability threshold of 0.95), then plasflow-plasmids are further filtered by last against PLSDB (only hit showing alignment with > 70% similarity over 70% of its lenth to a known plasmid in PLSDB is considered as valid hit). **NOTICE**: This method cannot fully distinguish plasmids from chromosome, as a result, it only report plasmid-like nanopore reads in **input_plasmid.like.tab**. If such a plasmid-like nanopre read also showed circular nature as indicated in **Input_circular.tab**, it is more likely to be a real plasmid. 
 
-Taxonomy annotation of nanopore reads were derived by combining results of KRAKEN and MetaPhlan2 markergene database. If case of inconsistent annotations among these tools, to maximize classification ratio, ARGpore2 combines results with priority as kraken > markergene. 
+Taxonomy annotation of nanopore reads were derived by combining results of Centrifuge and MetaPhlan2 markergene database. If case of inconsistent annotations among these tools, to maximize classification ratio, ARGpore2 combines results with priority as Centrifuge > markergene. 
 
 ## *Citation:*
 
@@ -73,7 +60,7 @@ Xia, Y., Li, A.-D., Deng, Y., Jiang, X.-T., Li, L.-G., and Zhang, T. (**2017**) 
 
 ##### Tools included in ARGpore2 should be also cited, these tools includes: 
 
-last, blast+, kraken, MetaPhlan2, ccontigs, plasflow, conda, GNU parallel, ruby, R, python
+last, blast+, Centrifuge, MetaPhlan2, ccontigs, plasflow, conda, GNU parallel, ruby, R, python
 
 
 

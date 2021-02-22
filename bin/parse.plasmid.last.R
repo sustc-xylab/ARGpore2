@@ -3,8 +3,9 @@ args <- commandArgs(trailingOnly = TRUE)
 
 library(plyr)
 library(data.table)
-library(parallel)
-
+# library(parallel)
+library(foreach)
+library(doParallel)
 
 filter.plasmid<-function(df,S=0.7,nL.plasmid=0.7,nL.chimera=0.5){
    #S=similarity cutoff to filter initial last alignment
@@ -13,7 +14,10 @@ filter.plasmid<-function(df,S=0.7,nL.plasmid=0.7,nL.chimera=0.5){
    #nL.plasmid=0.8
    #nL.chimera= the contig is consider a chimera like plasmid if its hit to plasmid is shorter than $nL.chimer of its length
    #nL.chimera=0.5
-      
+   
+    library(foreach)
+	library(doParallel)
+	library(plyr)
    colnames(df)<-c("query","subject","similarity","align.lenth","mismatch","gap","q.start","q.end","s.start","s.end","evalue","bitscore","s.len","q.len")
    # df$query<-sapply(strsplit(df$query,"-"),"[[",1)
    
@@ -38,9 +42,18 @@ filter.plasmid<-function(df,S=0.7,nL.plasmid=0.7,nL.chimera=0.5){
       
 	  
 	  # start_time <- Sys.time()
-      # for(g in 1:length(test.lst)) {
-	  tmp.lst2<-mclapply(tmp.lst,function(x){
-         # x<-test.lst[[g]]
+	    cl<-makeCluster(no_threads, outfile="")
+		registerDoParallel(cl)
+		pb <- txtProgressBar(min=0, max= length(tmp.lst), style = 3) # progress bar
+		
+		
+		tmp.lst2<-list()
+		tmp.lst2<-foreach(g =1:length(tmp.lst),
+                    .packages = c("plyr")) %dopar% {
+		# for(g in 1:length(test.lst)) {
+		# tmp.lst2<-mclapply(tmp.lst,function(x){
+         setTxtProgressBar(pb,g)
+		 x<-tmp.lst[[g]]
          # 保证q.start<q.end 对于反向的情况就把q.start,q.end互换
          lookat<-which(apply(x,1,function(y) as.numeric(y[7])> as.numeric(y[8])))
          tmp<-x[lookat,7]
@@ -69,7 +82,8 @@ filter.plasmid<-function(df,S=0.7,nL.plasmid=0.7,nL.chimera=0.5){
             x<-x[-tmp6,]
          }
 		 return(x)
-      })
+      }
+	  stopCluster(cl)
       # end_time <- Sys.time()
 	  # end_time - start_time
       result<-rbind.fill(tmp.lst2)
@@ -109,7 +123,7 @@ fread(args[1],header=F,fill=T)->plasflow
 fread(args[2],header=F,fill=T)->plasmid
 fread(args[3],header=F)->pname #name of plasmid
 colnames(pname)<-c("subject","plasmid.name")
-
+no_threads<-as.numeric(args[7])
 plasmid.f<-filter.plasmid(plasmid,
                           S=as.numeric(args[4]),
                           nL.plasmid=0.7,

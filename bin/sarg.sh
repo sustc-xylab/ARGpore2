@@ -26,9 +26,16 @@ ${DIR}/bin/last-983/src/lastal -s 2 -T 0 -Q 0 -a 1 -P $N_threads -f BlastTab ${D
 echo "parsing SARG-nt last alignment"
 grep -v "#" /tmp/argpore_${nowt}_${Query}_tmp.blast > /tmp/argpore_${nowt}_${Query}_tmp.blast.modified
 
-ruby ${DIR}/bin/BlastTab.addlen.rb -s -f ${DIR}/database/SARG_20170328_5020.ffn < /tmp/argpore_${nowt}_${Query}_tmp.blast.modified > /tmp/argpore_${nowt}_${Query}_tmp.blast2
+${DIR}/bin/BlastTab.addlen.sh \
+		${DIR}/database/SARG_20170328_5020.ffn \
+		${Query} \
+		/tmp/argpore_${nowt}_${Query}_tmp.blast.modified \
+		$DIR \
+		${out}/${Query}_sarg.last
 
-ruby ${DIR}/bin/BlastTab.addlen.rb -f $Query < /tmp/argpore_${nowt}_${Query}_tmp.blast2 > ${out}/${Query}_sarg.last
+# ruby ${DIR}/bin/BlastTab.addlen.rb -s -f ${DIR}/database/SARG_20170328_5020.ffn < /tmp/argpore_${nowt}_${Query}_tmp.blast.modified > /tmp/argpore_${nowt}_${Query}_tmp.blast2
+
+# ruby ${DIR}/bin/BlastTab.addlen.rb -f $Query < /tmp/argpore_${nowt}_${Query}_tmp.blast2 > ${out}/${Query}_sarg.last
 
 ############################
 echo "
@@ -40,8 +47,15 @@ ${DIR}/bin/last-983/src/lastal -s 2 -T 0 -Q 0 -a 1 -P $N_threads -f BlastTab ${D
 echo "parsing ESCG last alignment"
 grep -v "#" /tmp/argpore_${nowt}_${Query}_tmp.blast > /tmp/argpore_${nowt}_${Query}_tmp.blast.modified
 
-ruby ${DIR}/bin/BlastTab.addlen.rb -s -f ${DIR}/database/ESCG.fna < /tmp/argpore_${nowt}_${Query}_tmp.blast.modified > /tmp/argpore_${nowt}_${Query}_tmp.blast2
+${DIR}/bin/BlastTab.addlen.sh \
+		${DIR}/database/ESCG.fna \
+		${Query} \
+		/tmp/argpore_${nowt}_${Query}_tmp.blast.modified \
+		$DIR \
+		${out}/${Query}_escg.last
 
-ruby ${DIR}/bin/BlastTab.addlen.rb -f $Query < /tmp/argpore_${nowt}_${Query}_tmp.blast2 > ${out}/${Query}_escg.last
+# ruby ${DIR}/bin/BlastTab.addlen.rb -s -f ${DIR}/database/ESCG.fna < /tmp/argpore_${nowt}_${Query}_tmp.blast.modified > /tmp/argpore_${nowt}_${Query}_tmp.blast2
+
+# ruby ${DIR}/bin/BlastTab.addlen.rb -f $Query < /tmp/argpore_${nowt}_${Query}_tmp.blast2 > ${out}/${Query}_escg.last
 
 echo "parsing ESCG last alignment"

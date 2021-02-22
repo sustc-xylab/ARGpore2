@@ -23,7 +23,7 @@ else
 
 fi
 
-########### plasmid identification by Plasflow ####################
+########## plasmid identification by Plasflow ####################
 echo "predict plasmid using plasflow with probability threshold of 0.95"
 # need this line to use conda in a script
 source ${CONDA_BASE}/etc/profile.d/conda.sh
@@ -43,7 +43,7 @@ if [ $n -gt 10000 ]; then
 	${DIR}/bin/FastA.split.pl ${Query} /tmp/${Query}_${nowt}.split $n2
 	
 	rm -f tmp.plasflow_${nowt}.jobs
-	find /tmp -name "${Query}_${nowt}.split*.fa" | while read line
+	ls /tmp/${Query}_${nowt}.split*.fa | while read line
 	do 
 		PlasFlow.py --input ${line} --output ${line}_plasflow --threshold ${plasflow_cutoff} &
 		PID=$!
@@ -78,17 +78,29 @@ if [ -s ${out}/${Query}_plasflow.tab ]; then
 
 	grep -v "#" ${out}/${Query}_last.plasmid.tab  > /tmp/${nowt}_${Query}_tmp.modified
 
-	${DIR}/bin/BlastTab.addlen.rb -s -f ${Plasdb_fasta} < /tmp/${nowt}_${Query}_tmp.modified > /tmp/${nowt}_${Query}_tmp.modified2
-
-	${DIR}/bin/BlastTab.addlen.rb -f ${Query} < /tmp/${nowt}_${Query}_tmp.modified2 > ${out}/${Query}_last.plasmid.tab_wlength 
-
+	${DIR}/bin/BlastTab.addlen.sh \
+		${Plasdb_fasta} \
+		${Query} \
+		/tmp/${nowt}_${Query}_tmp.modified \
+		$DIR \
+		${out}/${Query}_last.plasmid.tab_wlength
+		
+	
 	###### merge last and plasflow results in R
 	echo "merge plasflow and PLSDB result"
-	Rscript ${DIR}/bin/parse.plasmid.last.R ${out}/${Query}_plasflow.tab ${out}/${Query}_last.plasmid.tab_wlength $Plasdb_fastaname $Simcutoff ${Query}_plasmid.like.tab ${out}/${Query}_plasmid.like_last.hit
+		Rscript ${DIR}/bin/parse.plasmid.last.R \
+		${out}/${Query}_plasflow.tab \
+		${out}/${Query}_last.plasmid.tab_wlength \
+		$Plasdb_fastaname \
+		$Simcutoff \
+		${Query}_plasmid.like.tab \
+		${out}/${Query}_plasmid.like_last.hit \
+		$N_threads
+	
 	
 else
 	echo "
 	No Plasmid identified"
 fi
 
-rm -f ${out}/${Query}_last.plasmid.tab_wlength
+rm -f ${out}/${Query}_last.plasmid.tab_wlength # to save disk space

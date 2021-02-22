@@ -120,11 +120,13 @@ escg.filter<-function(df,S=70,L=0.9,no_threads=1){
   library(plyr)
   
   colnames(df)<-c("query","subject","similarity","align.lenth","mismatch","gap","q.start","q.end","s.start","s.end","evalue","bitscore","s.len","q.len")
-  # df$query<-sapply(strsplit(as.character(df$query),"-"),"[[",1)
-  df$ko<-sapply(strsplit(as.character(df$subject),"::"),"[[",2)
+
   # filtering hit based on similarity & alignment length of the ESCG length
   lookat<-which(df$similarity>S & df$align.lenth/df$s.len>L)
   df<-df[lookat,]
+  
+  # df$query<-sapply(strsplit(as.character(df$query),"-"),"[[",1)
+  df$ko<-sapply(strsplit(as.character(df$subject),"::"),"[[",2)
   
   #filter overlap
   cat("\nfiltering overlap escg hits\n")

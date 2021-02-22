@@ -2,13 +2,13 @@
 ## ARGpore is designed to identify ARGs and their host in nanopore dataset
 ##Author: Yu XIA 2020-06-11
 ##Email: shuixia100@gmail.com
-##version 2.0
+##version 2.1
 set -e
 
 #### usage info ####
 show_help() {
 cat << EOF
-version 2.0
+version 2.1
 arguments:
 	-h	display this help 
 
@@ -43,7 +43,7 @@ OPTIND=1  # Reset in case getopts has been used previously in the shell.
 # initial value of variables
 N_threads="1"
 Input_fa=""
-Lencuoff="0.9"
+Lencutoff="0.9"
 Simcutoff="70"
 nowt=`date +%Y-%m-%d.%H:%M:%S`;
 SCRIPT=`realpath $0`
@@ -135,14 +135,14 @@ Finish ARG quantification @ `date +"%Y-%m-%d %T"`"
 
 
 ###############################################################
-####### taxonomy annotation of combined.fa by KRAKEN,taxator-tk and MetaPhlan 2 markergene
+####### taxonomy annotation of combined.fa by centrifuge and MetaPhlan 2 markergene
 ###############################################################
 echo "
 ----------------------------------------------------------------------------
 Start taxonomy annotatin @ `date +"%Y-%m-%d %T"`"
 
 Query="${Input_fa2}"
-bash $DIR/bin/kraken_marker.sh $Query $N_threads $DIR $Simcutoff $Lencuoff $nowt
+bash $DIR/bin/centrifuge_marker.sh $Query $N_threads $DIR $Simcutoff $Lencuoff $nowt
 
 
 echo "
@@ -176,13 +176,13 @@ Query=$Input_fa2
 out1=${Query}_sarg
 
 Rscript ${DIR}/bin/argpore.R \
-${out1}/${Query}_sarg.last \
+ ${out1}/${Query}_sarg.last \
  ${out1}/${Query}_escg.last \
  $N_threads \
  $DIR/database/structure.RData \
  ${Query}_taxa.tab \
  $Simcutoff \
- $Lencuoff \
+ $Lencutoff \
  ${Query}_plasmid.like.tab \
  ${Query}_arg.w.taxa.tab \
  ${Query}_arg.tab
@@ -207,8 +207,7 @@ fi
 mv ${Input_fa2} ${out}
 mv ${Input_fa2}_sarg ${out}/intermediate.files
 mv ${Input_fa2}_marker ${out}/intermediate.files
-mv ${Input_fa2}_KRAKEN ${out}/intermediate.files
-# mv ${Input_fa2}_taxator-tk ${out}/intermediate.files
+mv ${Input_fa2}_Centrifuge ${out}/intermediate.files
 mv ${Input_fa2}_Plasmid ${out}/intermediate.files
 mv ${Input_fa2}_circular.tab ${out}
 mv ${Input_fa2}_arg.w.taxa.tab ${out}
