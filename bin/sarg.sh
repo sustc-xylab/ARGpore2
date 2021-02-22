@@ -33,9 +33,6 @@ ${DIR}/bin/BlastTab.addlen.sh \
 		$DIR \
 		${out}/${Query}_sarg.last
 
-# ruby ${DIR}/bin/BlastTab.addlen.rb -s -f ${DIR}/database/SARG_20170328_5020.ffn < /tmp/argpore_${nowt}_${Query}_tmp.blast.modified > /tmp/argpore_${nowt}_${Query}_tmp.blast2
-
-# ruby ${DIR}/bin/BlastTab.addlen.rb -f $Query < /tmp/argpore_${nowt}_${Query}_tmp.blast2 > ${out}/${Query}_sarg.last
 
 ############################
 echo "
@@ -54,8 +51,5 @@ ${DIR}/bin/BlastTab.addlen.sh \
 		$DIR \
 		${out}/${Query}_escg.last
 
-# ruby ${DIR}/bin/BlastTab.addlen.rb -s -f ${DIR}/database/ESCG.fna < /tmp/argpore_${nowt}_${Query}_tmp.blast.modified > /tmp/argpore_${nowt}_${Query}_tmp.blast2
-
-# ruby ${DIR}/bin/BlastTab.addlen.rb -f $Query < /tmp/argpore_${nowt}_${Query}_tmp.blast2 > ${out}/${Query}_escg.last
 
 echo "parsing ESCG last alignment"

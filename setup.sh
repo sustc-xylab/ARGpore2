@@ -13,13 +13,14 @@ wget https://github.com/shenwei356/seqkit/releases/download/v0.12.1/seqkit_linux
 tar -zxvf seqkit_linux_amd64.tar.gz
 rm seqkit_linux_amd64.tar.gz
 
-############ blast+ 2.9.0
-echo ""
-echo "Installing blast+2.9.0 ---------------------------------------------------------------------
-"
-wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.9.0/ncbi-blast-2.9.0+-x64-linux.tar.gz
-tar -zvxf ncbi-blast-2.9.0+-x64-linux.tar.gz
-rm -f ncbi-blast-2.9.0+-x64-linux.tar.gz
+# ############ blast+ 2.9.0
+# echo ""
+# echo "Installing blast+2.9.0 ---------------------------------------------------------------------
+# "
+# wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.9.0/ncbi-blast-2.9.0+-x64-linux.tar.gz
+# tar -zvxf ncbi-blast-2.9.0+-x64-linux.tar.gz
+# rm -f ncbi-blast-2.9.0+-x64-linux.tar.gz
+# mv ncbi-blast-2.9.0+ ncbi-blast+
 
 ########## Centrifuge
 echo ""
