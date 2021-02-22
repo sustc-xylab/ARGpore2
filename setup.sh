@@ -85,8 +85,7 @@ rm -f ESCG.fna.tar.xz
 echo "
 Downloading lineage information for NCBI taxonomy"
 
-tar jxvf ${DIR}/database/2020-06-16_lineage.tab.tar.xz
-rm -f 2020-06-16_lineage.tab.tar.xz
+tar jxvf 2020-06-16_lineage.tab.tar.xz
 
 ######### PLSDB database #################################
 echo "
