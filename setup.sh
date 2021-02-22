@@ -13,14 +13,14 @@ wget https://github.com/shenwei356/seqkit/releases/download/v0.12.1/seqkit_linux
 tar -zxvf seqkit_linux_amd64.tar.gz
 rm seqkit_linux_amd64.tar.gz
 
-# ############ blast+ 2.9.0
-# echo ""
-# echo "Installing blast+2.9.0 ---------------------------------------------------------------------
-# "
-# wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.9.0/ncbi-blast-2.9.0+-x64-linux.tar.gz
-# tar -zvxf ncbi-blast-2.9.0+-x64-linux.tar.gz
-# rm -f ncbi-blast-2.9.0+-x64-linux.tar.gz
-# mv ncbi-blast-2.9.0+ ncbi-blast+
+############ blast+ 2.9.0
+echo ""
+echo "Installing blast+2.9.0 ---------------------------------------------------------------------
+"
+wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.11.0/ncbi-blast-2.11.0+-x64-linux.tar.gz
+tar -zvxf ncbi-blast-2.11.0+-x64-linux.tar.gz
+rm -f ncbi-blast-2.11.0+-x64-linux.tar.gz
+mv ncbi-blast-2.11.0+ ncbi-blast+
 
 ########## Centrifuge
 echo ""
@@ -95,7 +95,7 @@ wget https://ndownloader.figshare.com/files/21961095 --output-document 'PLSDB.zi
 unzip PLSDB.zip
 mv data/pls/PLSDB_2020_03_04 .
 
-$DIR/bin/ncbi-blast-2.9.0+/bin/blastdbcmd -db PLSDB_2020_03_04/plsdb.fna -dbtype nucl -entry all -outfmt "%f" -out PLSDB_2020_03_04.fna
+$DIR/bin/ncbi-blast+/bin/blastdbcmd -db PLSDB_2020_03_04/plsdb.fna -dbtype nucl -entry all -outfmt "%f" -out PLSDB_2020_03_04.fna
 
 grep ">" PLSDB_2020_03_04.fna | sed 's/>//' | sed 's/\ /\t/' > PLSDB_2020_03_04.fna.name
 $DIR/bin/fastaNameLengh.pl PLSDB_2020_03_04.fna > PLSDB_2020_03_04.fna.length
