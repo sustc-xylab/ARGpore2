@@ -31,7 +31,8 @@ output files:
 	input_taxa.tab	taxonomy assignment of all nanopore reads
 
 
-Example usage: bash argpore.sh -f test.fa -t 20
+Example usage: 
+	bash ../argpore.sh -f test.fa -t 20
 EOF
 }
 
@@ -62,7 +63,7 @@ while getopts "t:f:l:s:o:h" opt; do
 			Input_fa=$OPTARG
 			;;
 		l)
-			Lencuoff=$OPTARG
+			Lencutoff=$OPTARG
 			;;
 		s)
 			Simcutoff=`echo "$OPTARG*100"|bc`
@@ -96,7 +97,7 @@ then
 fi
 
 shift "$((OPTIND-1))"
-# echo $Input_fa $Simcutoff $Lencuoff $N_threads $Output $DIR $nowt
+# echo $Input_fa $Simcutoff $Lencutoff $N_threads $Output $DIR $nowt
 
 # subset the name of the $Input_fa
 # $Input_fa : including input.fa path while $Input_fa2 only contain name
@@ -107,6 +108,7 @@ echo "remove nanopore reads with duplicated name"
 $DIR/bin/seqkit rmdup -n $Input_fa2 -o ${Input_fa2}.uniq
 
 Input_fa2=${Input_fa2}.uniq
+$DIR/bin/fastaNameLengh.pl ${Input_fa2} | grep -v "#" > ${Input_fa2}.l
 
 echo "----------------------------------------------------------------------
 start ARGpore @ `date +"%Y-%m-%d %T"`
@@ -115,7 +117,7 @@ start ARGpore @ `date +"%Y-%m-%d %T"`
 echo "ARGpore2.0 is runing using parameters:
 Input fasta: $Input_fa2
 Similarity cutoff for ARG identification: $Simcutoff
-Alignment length cutoff for ARG identification: $Lencuoff
+Alignment length cutoff for ARG identification: $Lencutoff
 Number of threads: $N_threads
 ---------------------------------------------------------------------
 "
@@ -128,7 +130,7 @@ echo "
 Start ARG quantification @ `date +"%Y-%m-%d %T"`"
 
 Query="${Input_fa2}"
-bash $DIR/bin/sarg.sh $Query $N_threads $DIR $Simcutoff $Lencuoff
+bash $DIR/bin/sarg.sh $Query $N_threads $DIR $Simcutoff $Lencutoff
 
 echo "
 Finish ARG quantification @ `date +"%Y-%m-%d %T"`"
@@ -142,7 +144,7 @@ echo "
 Start taxonomy annotatin @ `date +"%Y-%m-%d %T"`"
 
 Query="${Input_fa2}"
-bash $DIR/bin/centrifuge_marker.sh $Query $N_threads $DIR $Simcutoff $Lencuoff $nowt
+bash $DIR/bin/centrifuge_marker.sh $Query $N_threads $DIR $Simcutoff $Lencutoff $nowt
 
 
 echo "

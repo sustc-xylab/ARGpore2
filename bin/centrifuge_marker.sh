@@ -81,8 +81,11 @@ Rscript ${DIR}/bin/combine.centrifuge.marker.R \
 	${DIR}/database/2020-06-16_lineage.tab \
 	${out2}/${Query}_centrifuge.report.txt \
 	${N_threads} \
+	${Query}.l \
 	${out3}/${Query}_marker.last \
 	$DIR/database/taxa.info.RData \
 	$Simcutoff \
 	$Lencuoff  \
 	${Query}_taxa.tab
+
+rm -f ${Query}.l

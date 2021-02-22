@@ -11,7 +11,7 @@ lineage<-fread(args[1])
 colnames(lineage)<-c("tax_id","kingdom","phylum","class","order","family","genus","species")
 
 cen<-fread(args[2])
-cen<-cen[which(cen$hitLength>100),] # only kept hitlenght > 100
+cen<-cen[which(cen$hitLength>150),] # only kept hitlenght > 150
 colnames(cen)[3]<-c("tax_id")
 cen<-merge(cen,lineage, by="tax_id")
 cen<-as.data.frame(cen)
@@ -20,6 +20,19 @@ for(i in 9:ncol(cen)){
 }
 
 n_threads<-as.numeric(args[3])
+
+fasta.name<-fread(args[4])
+colnames(fasta.name)<-c("contig","length")
+fasta.name<-data.frame(fasta.name)
+# fasta.name<-fasta.name[,1]
+fasta.name$kingdom<-""
+fasta.name$phylum<-""
+fasta.name$class<-""
+fasta.name$order<-""
+fasta.name$family<-""
+fasta.name$genus<-""
+fasta.name$species<-""
+fasta.name<-fasta.name[,c("contig","kingdom","phylum","class","order","family","genus","species")]
 
 # --- taxa voting for centrifuge taxa : cen2---------
 cat("taxa voting for centrifuge result\n")
@@ -95,13 +108,13 @@ cen2.nv<-cen2.nv[,c("readID",rank)]
 cen2<-rbind(cen2.nv,cen2.v)
 colnames(cen2)<-c("contig",rank)
 
-# read in the 2D.fa last marker gene result
-taxa<-fread(args[4],header=F)
+# read in the 2D.fa last marker gene result #####
+taxa<-fread(args[5],header=F)
 colnames(taxa)<-c("query","subject","similarity","align.lenth","mismatch","gap","q.start","q.end","s.start","s.end","evalue","bitscore","s.len","q.len")
-load(args[5])
+load(args[6])
 
 # filtering hit based on similarity & alignment length of the marker gene length
-lookat<-which(taxa$similarity> args[6] & taxa$align.lenth/taxa$s.len>args[7])
+lookat<-which(taxa$similarity> args[7] & taxa$align.lenth/taxa$s.len>args[8])
 taxa<-taxa[lookat,]
 taxa<-merge(taxa,taxa.info,by="subject")
 taxa<-arrange(taxa,query,desc(bitscore))
@@ -160,10 +173,13 @@ merge.taxa<-function(k,t){
 }
 
 # use which centrifuge as basis to merge in markergene
-# merge in taxa from marker only when marker's above level taxa is equal to kraken
+# merge in taxa from marker only when marker's above level taxa is equal to centrifuge
 m<-merge.taxa(data.frame(cen2),data.frame(taxa))
 
-write.table(m,file=args[8],row.name=F,col.name=T, quote=F, sep="\t")
+m<-rbind(m,fasta.name[which(!fasta.name$contig %in% m$contig),])
+
+
+write.table(m,file=args[9],row.name=F,col.name=T, quote=F, sep="\t")
 
 #### print out the unclassified ratio########
 m2<-m
@@ -175,6 +191,6 @@ for(i in 1:length(rank)){
 t<-matrix(c,ncol=length(rank))
 colnames(t)<-rank
 rownames(t)<-c("unclassified ratio")
-classified<-paste(args[8],"_unclassified.ratio.tab",sep="")
+classified<-paste(args[9],"_unclassified.ratio.tab",sep="")
 write.table(t,file=classified,row.name=T,col.name=T, quote=F, sep="\t")
 

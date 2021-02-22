@@ -25,7 +25,7 @@ Please read below instructions carefully to avoid unnecessary errors.
 	
 	bash ./setup.sh	
 
-The setup.sh will install ccontigs, blast+, Centrifuge and then download bacteria+archaea+virus database for Centrifuge, MetaPhlan2 Markergene and PLSDB database for you. It will take at least 1 hour to finish, please stay patient :)
+The setup.sh will install ccontigs, blast+, Centrifuge and then download bacteria+archaea+virus database for Centrifuge, MetaPhlan2 Markergene and PLSDB database for you. It will take at least 4 hour to finish, please stay patient :)
 
 
 
@@ -35,6 +35,12 @@ The setup.sh will install ccontigs, blast+, Centrifuge and then download bacteri
 ## Using ARGpore2 
 Once download ARGpore2 package, all needed analysis is wrapped up in one executable named **argpore.sh**. Please **use bash instead of sh** to initiate argpore.sh.
 
+**NOTICE:**
+	To avoid cross-writing of intermediate files, each ARGpore run should has a independent working directory
+
+	mkdir -p demo
+	cp test.fa demo 
+	cd demo 
 	bash $PATH_to_ARGpore2/argpore.sh -f test.fa -t 60 > ARGpore.log
 
 
