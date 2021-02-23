@@ -9,7 +9,7 @@ cd ${DIR}/bin
 ########## seqkit
 echo "Installing seqkit ---------------------------------------------------------------------
 "
-wget https://github.com/shenwei356/seqkit/releases/download/v0.12.1/seqkit_linux_amd64.tar.gz
+wget https://github.com/shenwei356/seqkit/releases/download/v0.12.1/seqkit_linux_amd64.tar.gz --output-document 'seqkit_linux_amd64.tar.gz'
 tar -zxvf seqkit_linux_amd64.tar.gz
 rm seqkit_linux_amd64.tar.gz
 
@@ -26,7 +26,7 @@ mv ncbi-blast-2.11.0+ ncbi-blast+
 echo ""
 echo "Intalling Centrifuge -------------------------------------------------------------------
 "
-wget ftp://ftp.ccb.jhu.edu/pub/infphilo/centrifuge/downloads/centrifuge-1.0.3-beta-Linux_x86_64.zip
+wget ftp://ftp.ccb.jhu.edu/pub/infphilo/centrifuge/downloads/centrifuge-1.0.3-beta-Linux_x86_64.zip --output-document 'centrifuge-1.0.3-beta-Linux_x86_64.zip'
 unzip centrifuge-1.0.3-beta-Linux_x86_64.zip
 rm centrifuge-1.0.3-beta-Linux_x86_64.zip
 mv centrifuge-1.0.3-beta centrifuge
