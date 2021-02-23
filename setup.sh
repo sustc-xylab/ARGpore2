@@ -9,7 +9,7 @@ cd ${DIR}/bin
 ########## seqkit
 echo "Installing seqkit ---------------------------------------------------------------------
 "
-curl https://github.com/shenwei356/seqkit/releases/download/v0.12.1/seqkit_linux_amd64.tar.gz --output seqkit_linux_amd64.tar.gz
+wget https://github.com/shenwei356/seqkit/releases/download/v0.12.1/seqkit_linux_amd64.tar.gz
 tar -zxvf seqkit_linux_amd64.tar.gz
 rm seqkit_linux_amd64.tar.gz
 
@@ -26,7 +26,7 @@ mv ncbi-blast-2.11.0+ ncbi-blast+
 echo ""
 echo "Intalling Centrifuge -------------------------------------------------------------------
 "
-curl ftp://ftp.ccb.jhu.edu/pub/infphilo/centrifuge/downloads/centrifuge-1.0.3-beta-Linux_x86_64.zip --output centrifuge-1.0.3-beta-Linux_x86_64.zip
+wget ftp://ftp.ccb.jhu.edu/pub/infphilo/centrifuge/downloads/centrifuge-1.0.3-beta-Linux_x86_64.zip
 unzip centrifuge-1.0.3-beta-Linux_x86_64.zip
 rm centrifuge-1.0.3-beta-Linux_x86_64.zip
 mv centrifuge-1.0.3-beta centrifuge
@@ -92,7 +92,7 @@ rm -rf database
 ######### PLSDB database #################################
 echo "
 Downloading PLSDB"
-curl https://ndownloader.figshare.com/files/21961095 --output PLSDB.zip
+wget https://ndownloader.figshare.com/files/21961095 --output-document 'PLSDB.zip'
 unzip PLSDB.zip
 mv data/pls/PLSDB_2020_03_04 .
 
