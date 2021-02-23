@@ -58,7 +58,7 @@ if [ $n -gt 10000 ]; then
 	cat /tmp/${Query}_${nowt}.split*.fa_plasflow_unclassified.fasta > ${out}/${Query}_plasflow_unclassified.fasta
 	rm -f /tmp/${Query}_${nowt}.split*
 else
-	PlasFlow.py --input ${Query} --output ${out}/${Query}_plasflow --threshold ${plasflow_cutoff} --batch_size 2000
+	${CONDA_BASE}/envs/plasflow/bin/PlasFlow.py --input ${Query} --output ${out}/${Query}_plasflow --threshold ${plasflow_cutoff} --batch_size 2000
 fi
 
 grep ">" ${out}/${Query}_plasflow_plasmids.fasta | sed 's/>//' | cut -d " " -f 1 > ${out}/${Query}_plasflow.tab

@@ -2,7 +2,7 @@
 
 **ARGs identification** from nanopore 1D/2D reads
 
-ARGpore2 is a easy-to-use bioinformatics pipeline which codifies the current beat-practice to identify antibiotic resistance genes (ARGs) and its host populations from nanopore reads (fasta format).
+ARGpore2 is a easy-to-use bioinformatics pipeline which codifies the current best practice to identify antibiotic resistance genes (ARGs) and its host populations from nanopore reads (fasta format).
 
 Please read below instructions carefully to avoid unnecessary errors.
 
@@ -14,7 +14,7 @@ Please read below instructions carefully to avoid unnecessary errors.
 	GNU parallel	### sudo apt install parallel
 	git lfs	        ### sudo apt install git-lfs
 	R and library: plyr, data.table, doParallel, foreach
-	plasflow via conda
+	[plasflow via conda](https://github.com/smaegol/PlasFlow#conda-based---recommended)
 	
 
 ### Setup ARGpore2
