@@ -9,12 +9,10 @@ Please read below instructions carefully to avoid unnecessary errors.
 ## Installation 
 ### Pre-requisites for ARGpore 
 	
-	ruby 2.3.1p112	### sudo apt install ruby-full
 	python2.7	### sudo apt install python2.7
 	GNU parallel	### sudo apt install parallel
 	git lfs	        ### sudo apt install git-lfs
-	R and library: plyr, data.table, doParallel, foreach
-	plasflow via conda ### https://github.com/smaegol/PlasFlow#conda-based---recommended
+	R and library: plyr, data.table, doParallel, foreach 
 	
 
 ### Setup ARGpore2
@@ -56,7 +54,7 @@ Main output files include:
 	input_plasmid.like.tab	plasmid-like nanopore reads identified
 	input_taxa.tab		taxonomy assignment of all nanopore reads
 
-plasmid-like nanopore reads are identified by firstly using plasflow to identify plasmids (probability threshold of 0.95), then plasflow-plasmids are further filtered by last against PLSDB (only hit showing alignment with > 70% similarity over 70% of its lenth to a known plasmid in PLSDB is considered as valid plasmid hit). **NOTICE**: This method cannot fully distinguish plasmids from chromosome, as a result, it only report plasmid-like nanopore reads in **input_plasmid.like.tab**. If such a plasmid-like nanopre read also showed circular nature as indicated in **Input_circular.tab**, it is more likely to be a real plasmid. 
+plasmid-like nanopore reads are identified by last query against PLSDB (only hit showing alignment with > 70% similarity over 70% of its lenth to a known plasmid in PLSDB is considered as valid plasmid hit). **NOTICE**: This method cannot fully distinguish plasmids from chromosome, as a result, it only report plasmid-like nanopore reads in **input_plasmid.like.tab**. If such a plasmid-like nanopre read also showed circular nature as indicated in **Input_circular.tab**, it is more likely to be a real plasmid. 
 
 Taxonomy annotation of nanopore reads were derived by combining results of Centrifuge and MetaPhlan2 markergene database. If case of inconsistent annotations among these tools, to maximize classification ratio, ARGpore2 combines results with priority as Centrifuge > markergene. 
 

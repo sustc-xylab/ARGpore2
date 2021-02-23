@@ -9,9 +9,9 @@ library(doParallel)
 
 filter.plasmid<-function(df,S=0.7,nL.plasmid=0.7,nL.chimera=0.5){
    #S=similarity cutoff to filter initial last alignment
-   #S=0.8
+   #S=0.7
    #nL.plsmid= the contig is consider as plasmid if its hit to plasmid is longer than $nL.plasmid of its length 
-   #nL.plasmid=0.8
+   #nL.plasmid=0.7
    #nL.chimera= the contig is consider a chimera like plasmid if its hit to plasmid is shorter than $nL.chimer of its length
    #nL.chimera=0.5
    
@@ -119,25 +119,26 @@ filter.plasmid<-function(df,S=0.7,nL.plasmid=0.7,nL.chimera=0.5){
 }
 
 
-fread(args[1],header=F,fill=T)->plasflow
-fread(args[2],header=F,fill=T)->plasmid
-fread(args[3],header=F)->pname #name of plasmid
+# fread(args[1],header=F,fill=T)->plasflow
+fread(args[1],header=F,fill=T)->plasmid
+fread(args[2],header=F)->pname #name of plasmid
 colnames(pname)<-c("subject","plasmid.name")
-no_threads<-as.numeric(args[7])
+no_threads<-as.numeric(args[6])
 plasmid.f<-filter.plasmid(plasmid,
-                          S=as.numeric(args[4]),
+                          S=as.numeric(args[3]),
                           nL.plasmid=0.7,
                           nL.chimera=0.5)
 
 
-plasmid.c<-intersect(plasmid.f$plasmid$query,plasflow$V1)
+# plasmid.c<-intersect(plasmid.f$plasmid$query,plasflow$V1)
+plasmid.c<-plasmid.f$plasmid$query
 plasmid.d<-plasmid.f$plasmid[which(plasmid.f$plasmid$query %in% plasmid.c),]
 
 if(length(plasmid.c)>0){
 	
-	write.table(plasmid.d[,c("query","plasmid.name")],file=args[5],sep="\t",quote=F, row.names=F)
+	write.table(plasmid.d[,c("query","plasmid.name")],file=args[4],sep="\t",quote=F, row.names=F)
 	
-	write.table(plasmid.d,file=args[6],sep="\t",quote=F, row.names=F)
+	write.table(plasmid.d,file=args[5],sep="\t",quote=F, row.names=F)
 } else {
 	cat("	No plasmid hit against PLSDB database\n")
 }

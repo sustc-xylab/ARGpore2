@@ -83,7 +83,7 @@ $DIR/bin/fastaNameLengh.pl ESCG.fna > ESCG.fna.length
 rm -f ESCG.fna.tar.xz
 
 
-# ########## lineage database ###################################################################
+########### lineage database ###################################################################
 echo "
 Downloading lineage information for NCBI taxonomy"
 
@@ -121,3 +121,4 @@ rm p+b+v.tar.gz
 
 echo "Finish Download required databases
 ------------------------------------------------------------------"
+echo "Done ARGpore2 setup"
