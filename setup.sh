@@ -20,6 +20,7 @@ echo "Installing blast+2.9.0 ---------------------------------------------------
 curl https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.11.0/ncbi-blast-2.11.0+-x64-linux.tar.gz --output ncbi-blast-2.11.0+-x64-linux.tar.gz
 tar -zvxf ncbi-blast-2.11.0+-x64-linux.tar.gz
 rm -f ncbi-blast-2.11.0+-x64-linux.tar.gz
+rm -rf ncbi-blast+
 mv ncbi-blast-2.11.0+ ncbi-blast+
 
 ########## Centrifuge
@@ -29,6 +30,7 @@ echo "Intalling Centrifuge -----------------------------------------------------
 wget ftp://ftp.ccb.jhu.edu/pub/infphilo/centrifuge/downloads/centrifuge-1.0.3-beta-Linux_x86_64.zip --output-document 'centrifuge-1.0.3-beta-Linux_x86_64.zip'
 unzip centrifuge-1.0.3-beta-Linux_x86_64.zip
 rm centrifuge-1.0.3-beta-Linux_x86_64.zip
+rm -rf centrifuge
 mv centrifuge-1.0.3-beta centrifuge
 
 
