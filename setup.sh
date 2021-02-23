@@ -35,16 +35,16 @@ mv centrifuge-1.0.3-beta centrifuge
 
 
 ############# ccontigs #####
-echo "
-Installing ccontigs ---------------------------------------------------------------------
-"
-if [ -d ccontigs ]; then
-        rm -rf ccontigs
-fi
-git clone https://github.com/Microbiology/ccontigs.git
-curl https://julialang-s3.julialang.org/bin/linux/x64/1.4/julia-1.4.2-linux-x86_64.tar.gz --output julia-1.4.2-linux-x86_64.tar.gz
-tar -xvzf julia-1.4.2-linux-x86_64.tar.gz 
-rm -f julia-1.4.2-linux-x86_64.tar.gz
+# echo "
+# Installing ccontigs ---------------------------------------------------------------------
+# "
+# if [ -d ccontigs ]; then
+        # rm -rf ccontigs
+# fi
+# git clone https://github.com/Microbiology/ccontigs.git
+# curl https://julialang-s3.julialang.org/bin/linux/x64/1.4/julia-1.4.2-linux-x86_64.tar.gz --output julia-1.4.2-linux-x86_64.tar.gz
+# tar -xvzf julia-1.4.2-linux-x86_64.tar.gz 
+# rm -f julia-1.4.2-linux-x86_64.tar.gz
 
 echo "Finish install required tools 
 ------------------------------------------------------------------"

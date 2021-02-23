@@ -162,12 +162,12 @@ bash ${DIR}/bin/plasmid.identification.sh ${Input_fa2} ${DIR} $N_threads $Query 
 echo "
 Finish Plasmid identification @ `date +"%Y-%m-%d %T"`"
 
-#########################################################
-#######identify circular contigs 
-#########################################################
-echo "
-Finding circular contig " 
-$DIR/bin/julia-1.4.2/bin/julia $DIR/bin/ccontigs/ccontigs.jl -i ${Input_fa2} -o ${Input_fa2}_circular.tab
+# #########################################################
+# #######identify circular contigs 
+# #########################################################
+# echo "
+# Finding circular contig " 
+# $DIR/bin/julia-1.4.2/bin/julia $DIR/bin/ccontigs/ccontigs.jl -i ${Input_fa2} -o ${Input_fa2}_circular.tab
 
 ########################################################## 
 ########## summary in nanopore.summary.R
@@ -211,7 +211,7 @@ mv ${Input_fa2}_sarg ${out}/intermediate.files
 mv ${Input_fa2}_marker ${out}/intermediate.files
 mv ${Input_fa2}_Centrifuge ${out}/intermediate.files
 mv ${Input_fa2}_Plasmid ${out}/intermediate.files
-mv ${Input_fa2}_circular.tab ${out}
+#mv ${Input_fa2}_circular.tab ${out}
 mv ${Input_fa2}_arg.w.taxa.tab ${out}
 mv ${Input_fa2}_taxa.tab_unclassified.ratio.tab ${out}
 mv ${Input_fa2}_plasmid.like.tab ${out}

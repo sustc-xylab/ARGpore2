@@ -51,7 +51,7 @@ Main output files include:
 	input_plasmid.like.tab	plasmid-like nanopore reads identified
 	input_taxa.tab		taxonomy assignment of all nanopore reads
 
-plasmid-like nanopore reads are identified by last query against PLSDB (only hit showing alignment with > 70% similarity over 70% of its lenth to a known plasmid in PLSDB is considered as valid plasmid hit). **NOTICE**: This method cannot fully distinguish plasmids from chromosome, as a result, it only report plasmid-like nanopore reads in **input_plasmid.like.tab**. If such a plasmid-like nanopre read also showed circular nature as indicated in **Input_circular.tab**, it is more likely to be a real plasmid. 
+plasmid-like nanopore reads are identified by last query against PLSDB (only hit showing alignment with > 70% similarity over 70% of its lenth to a known plasmid in PLSDB is considered as valid plasmid hit). **NOTICE**: This method cannot fully distinguish plasmids from chromosome, as a result, it only report plasmid-like nanopore reads in **input_plasmid.like.tab**. If such a plasmid-like nanopre read also showed circular nature,it is more likely to be a real plasmid. You may use ccontigs (https://github.com/Microbiology/ccontigs.git) to further check the circular nature of nanopore reads 
 
 Taxonomy annotation of nanopore reads were derived by combining results of Centrifuge and MetaPhlan2 markergene database. If case of inconsistent annotations among these tools, to maximize classification ratio, ARGpore2 combines results with priority as Centrifuge > markergene. 
 
@@ -63,6 +63,6 @@ Xia, Y., Li, A.-D., Deng, Y., Jiang, X.-T., Li, L.-G., and Zhang, T. (**2017**) 
 
 ##### Tools included in ARGpore2 should be also cited, these tools includes: 
 
-last, blast+, Centrifuge, MetaPhlan2, ccontigs, PLSDB, GNU parallel, R, python
+last, blast+, Centrifuge, MetaPhlan2, PLSDB, GNU parallel, R, python
 
 
