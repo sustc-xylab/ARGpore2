@@ -2,7 +2,7 @@
 
 **ARGs identification** from nanopore 1D/2D reads
 
-ARGpore2 is a easy-to-use bioinformatics pipeline which codifies the current best practice to identify antibiotic resistance genes (ARGs) and its host populations from nanopore reads (fasta format).
+ARGpore2 is a easy-to-use bioinformatics pipeline which codifies the current best practice to identify antibiotic resistance genes (ARGs) and its host populations from nanopore reads (longer than 1kb in fasta format).
 
 Please read below instructions carefully to avoid unnecessary errors.
 
@@ -31,7 +31,9 @@ The setup.sh will install **blast+, Centrifuge** and then download **bacteria+ar
 Once installed ARGpore2 package, all needed analysis is wrapped up in one executable named **argpore.sh**. Please **use bash instead of sh** to initiate argpore.sh.
 
 **NOTICE:**
-	To avoid cross-writing of intermediate files, each ARGpore run should has a independent working directory
+	To avoid cross-writing of intermediate files, each ARGpore run should has a independent working directory. To improve annotation accuracy, your input fasta should be **longer than 1kb** 
+	
+	
 
 	mkdir -p demo
 	cp test.fa demo 
