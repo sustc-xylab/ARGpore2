@@ -9,7 +9,7 @@ cd ${DIR}/bin
 ########## seqkit
 echo "Installing seqkit ---------------------------------------------------------------------
 "
-wget https://github.com/shenwei356/seqkit/releases/download/v0.12.1/seqkit_linux_amd64.tar.gz
+curl https://github.com/shenwei356/seqkit/releases/download/v0.12.1/seqkit_linux_amd64.tar.gz --output seqkit_linux_amd64.tar.gz
 tar -zxvf seqkit_linux_amd64.tar.gz
 rm seqkit_linux_amd64.tar.gz
 
@@ -17,7 +17,7 @@ rm seqkit_linux_amd64.tar.gz
 echo ""
 echo "Installing blast+2.9.0 ---------------------------------------------------------------------
 "
-wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.11.0/ncbi-blast-2.11.0+-x64-linux.tar.gz
+curl https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.11.0/ncbi-blast-2.11.0+-x64-linux.tar.gz --output ncbi-blast-2.11.0+-x64-linux.tar.gz
 tar -zvxf ncbi-blast-2.11.0+-x64-linux.tar.gz
 rm -f ncbi-blast-2.11.0+-x64-linux.tar.gz
 mv ncbi-blast-2.11.0+ ncbi-blast+
@@ -26,7 +26,7 @@ mv ncbi-blast-2.11.0+ ncbi-blast+
 echo ""
 echo "Intalling Centrifuge -------------------------------------------------------------------
 "
-wget ftp://ftp.ccb.jhu.edu/pub/infphilo/centrifuge/downloads/centrifuge-1.0.3-beta-Linux_x86_64.zip 
+curl ftp://ftp.ccb.jhu.edu/pub/infphilo/centrifuge/downloads/centrifuge-1.0.3-beta-Linux_x86_64.zip --output centrifuge-1.0.3-beta-Linux_x86_64.zip
 unzip centrifuge-1.0.3-beta-Linux_x86_64.zip
 rm centrifuge-1.0.3-beta-Linux_x86_64.zip
 mv centrifuge-1.0.3-beta centrifuge
@@ -40,8 +40,8 @@ if [ -d ccontigs ]; then
         rm -rf ccontigs
 fi
 git clone https://github.com/Microbiology/ccontigs.git
-wget https://julialang-s3.julialang.org/bin/linux/x64/1.4/julia-1.4.2-linux-x86_64.tar.gz
-tar -xvzf julia-1.4.2-linux-x86_64.tar.gz
+curl https://julialang-s3.julialang.org/bin/linux/x64/1.4/julia-1.4.2-linux-x86_64.tar.gz --output julia-1.4.2-linux-x86_64.tar.gz
+tar -xvzf julia-1.4.2-linux-x86_64.tar.gz 
 rm -f julia-1.4.2-linux-x86_64.tar.gz
 
 echo "Finish install required tools 
@@ -92,7 +92,7 @@ rm -rf database
 ######### PLSDB database #################################
 echo "
 Downloading PLSDB"
-wget https://ndownloader.figshare.com/files/21961095 --output-document 'PLSDB.zip'
+curl https://ndownloader.figshare.com/files/21961095 --output PLSDB.zip
 unzip PLSDB.zip
 mv data/pls/PLSDB_2020_03_04 .
 
