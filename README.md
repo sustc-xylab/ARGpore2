@@ -23,7 +23,7 @@ Please read below instructions carefully to avoid unnecessary errors.
 	
 	bash ./setup.sh	
 
-The setup.sh will install **ccontigs, blast+, Centrifuge** and then download **bacteria+archaea+virus database for Centrifuge, MetaPhlan2 Markergene and PLSDB database** for you. It will take at least **4 hour** to finish, please stay patient :)
+The setup.sh will install **blast+, Centrifuge** and then download **bacteria+archaea+virus database for Centrifuge, MetaPhlan2 Markergene and PLSDB database** for you. It will take at least **4 hour** to finish, please stay patient :)
 
 
 
@@ -47,11 +47,10 @@ Main output files include:
 	
 	input_arg.tab		ARG quntification (copy per cell)
 	input_arg.w.taxa.tab	ARGs-containing nanopore reads with taxonomy assignment and plausible plasmid identification
-	input_circular.tab	circular nanopore reads identified
 	input_plasmid.like.tab	plasmid-like nanopore reads identified
 	input_taxa.tab		taxonomy assignment of all nanopore reads
 
-plasmid-like nanopore reads are identified by last query against PLSDB (only hit showing alignment with > 70% similarity over 70% of its lenth to a known plasmid in PLSDB is considered as valid plasmid hit). **NOTICE**: This method cannot fully distinguish plasmids from chromosome, as a result, it only report plasmid-like nanopore reads in **input_plasmid.like.tab**. If such a plasmid-like nanopre read also showed circular nature,it is more likely to be a real plasmid. You may use ccontigs (https://github.com/Microbiology/ccontigs.git) to further check the circular nature of nanopore reads 
+plasmid-like nanopore reads are identified by last query against PLSDB (only hit showing alignment with > 70% similarity over 70% of its lenth to a known plasmid in PLSDB is considered as valid plasmid hit). **NOTICE**: This method cannot fully distinguish plasmids from chromosome, as a result, it only report plasmid-like nanopore reads in **input_plasmid.like.tab**. If such a plasmid-like nanopre read also showed circular nature,it is more likely to be a real plasmid. You may use ccontigs (https://github.com/Microbiology/ccontigs.git) to check the circular nature of nanopore reads. Althernatively, user may want to use Plasflow (https://github.com/smaegol/PlasFlow) to double-confirm these plasmid-like nanopore reads by comparing kmer freqeucy of these reads to known plasmids. 
 
 Taxonomy annotation of nanopore reads were derived by combining results of Centrifuge and MetaPhlan2 markergene database. If case of inconsistent annotations among these tools, to maximize classification ratio, ARGpore2 combines results with priority as Centrifuge > markergene. 
 
