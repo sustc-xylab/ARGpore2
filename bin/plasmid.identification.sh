@@ -6,7 +6,6 @@ Query=${1}
 DIR=${2}
 N_threads=$3
 nowt=$5
-# CONDA_BASE=$(conda info --base)
 
 out=${Query}_Plasmid
 
@@ -22,49 +21,6 @@ else
 	mkdir -p $out
 
 fi
-
-########## plasmid identification by Plasflow ####################
-# echo "predict plasmid using plasflow with probability threshold of 0.95"
-# # need this line to use conda in a script
-# source ${CONDA_BASE}/etc/profile.d/conda.sh
-
-# conda activate plasflow
-
-# Query=$1
-# out=${Query}_Plasmid
-# plasflow_cutoff="0.95"
-# PATH=${CONDA_BASE}/envs/plasflow/bin:$PATH
-
-
-# n=`grep ">" ${Query} | wc -l`
-# if [ $n -gt 10000 ]; then
-	# n2=`echo $(($n/10000))`
-	# echo "split $Query into $n2 pices to run PlasFlow"
-	# ${DIR}/bin/FastA.split.pl ${Query} /tmp/${Query}_${nowt}.split $n2
-	
-	# rm -f tmp.plasflow_${nowt}.jobs
-	# ls /tmp/${Query}_${nowt}.split*.fa | while read line
-	# do 
-		# PlasFlow.py --input ${line} --output ${line}_plasflow --threshold ${plasflow_cutoff} &
-		# PID=$!
-		# echo "$PID" >> tmp.plasflow_${nowt}.jobs
-	# done
-	
-	# bash $DIR/bin/monitor.bgpid.sh tmp.plasflow_${nowt}.jobs
-	# rm -f tmp.plasflow_${nowt}.jobs
-	
-	# cat /tmp/${Query}_${nowt}.split*.fa_plasflow_plasmids.fasta > ${out}/${Query}_plasflow_plasmids.fasta
-	# cat /tmp/${Query}_${nowt}.split*.fa_plasflow_chromosomes.fasta > ${out}/${Query}_plasflow_chromosomes.fasta
-	# cat /tmp/${Query}_${nowt}.split*.fa_plasflow_unclassified.fasta > ${out}/${Query}_plasflow_unclassified.fasta
-	# rm -f /tmp/${Query}_${nowt}.split*
-# else
-	# ${CONDA_BASE}/envs/plasflow/bin/PlasFlow.py --input ${Query} --output ${out}/${Query}_plasflow --threshold ${plasflow_cutoff} --batch_size 2000
-# fi
-
-# grep ">" ${out}/${Query}_plasflow_plasmids.fasta | sed 's/>//' | cut -d " " -f 1 > ${out}/${Query}_plasflow.tab
-
-# conda deactivate
-
 
 
 ###### Last agaisnt PLSDB database############################

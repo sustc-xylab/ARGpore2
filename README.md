@@ -27,9 +27,6 @@ The setup.sh will install **ccontigs, blast+, Centrifuge** and then download **b
 
 
 
-
-
-
 ## Using ARGpore2 
 Once installed ARGpore2 package, all needed analysis is wrapped up in one executable named **argpore.sh**. Please **use bash instead of sh** to initiate argpore.sh.
 
@@ -66,6 +63,6 @@ Xia, Y., Li, A.-D., Deng, Y., Jiang, X.-T., Li, L.-G., and Zhang, T. (**2017**) 
 
 ##### Tools included in ARGpore2 should be also cited, these tools includes: 
 
-last, blast+, Centrifuge, MetaPhlan2, ccontigs, plasflow, conda, GNU parallel, ruby, R, python
+last, blast+, Centrifuge, MetaPhlan2, ccontigs, PLSDB, GNU parallel, R, python
 
 
