@@ -159,10 +159,11 @@ merge.taxa<-function(k,t){
 			# previous level
 			x2<-paste(rank[i-1],"x",sep=".") # corespond to k
 			y2<-paste(rank[i-1],"y",sep=".") # corespond to t
-			lookat2<-which(m[,x2]==m[,y2])
+			lookat2<-which(m[,x2]==m[,y2] & all(m[,x2]=="",m[,y2]==""))
 			lookat3<-intersect(lookat,lookat2)
-			if(length(lookat3)>0) {
 			m[,rank[i]]<-m[,x]
+			if(length(lookat3)>0) {
+			
 			m[,rank[i]][lookat3]<-m[,y][lookat3]}
 		}
 	}
