@@ -41,7 +41,8 @@ cen<-arrange(cen, readID, score)
 
 cen2.nv<-cen[cen$numMatches<=1,]
 cen2.v<-cen[cen$numMatches>1,]
-  
+
+if(nrow(cen2.v)>=1){
 tmp.readID<-unique(cen2.v$readID)
 rank.lst<-list()
 cl<-makeCluster(n_threads, outfile="")
@@ -106,8 +107,13 @@ rank<-c("kingdom","phylum","class","order","family","genus","species")
 colnames(cen2.v)<-c("readID",rank)
 cen2.nv<-cen2.nv[,c("readID",rank)]
 cen2<-rbind(cen2.nv,cen2.v)
-colnames(cen2)<-c("contig",rank)
+} else {
+rank<-c("kingdom","phylum","class","order","family","genus","species")
+cen2.nv<-cen2.nv[,c("readID",rank)]
+cen2<-cen2.nv}
 
+
+colnames(cen2)<-c("contig",rank)
 # read in the 2D.fa last marker gene result #####
 taxa<-fread(args[5],header=F)
 colnames(taxa)<-c("query","subject","similarity","align.lenth","mismatch","gap","q.start","q.end","s.start","s.end","evalue","bitscore","s.len","q.len")

@@ -34,12 +34,12 @@ ${DIR}/bin/last-983/scripts/parallel-fasta "${DIR}/bin/last-983/src/lastal -s 2 
 	
 if [ -s ${out}/${Query}_last.plasmid.tab ]; then
 
-	grep -v "#" ${out}/${Query}_last.plasmid.tab  > /tmp/${nowt}_${Query}_tmp.modified
+	fgrep -v "#" ${out}/${Query}_last.plasmid.tab  > ${out}/${nowt}_${Query}_tmp.modified
 
 	${DIR}/bin/BlastTab.addlen.sh \
 		${Plasdb_fasta} \
 		${Query} \
-		/tmp/${nowt}_${Query}_tmp.modified \
+		${out}/${nowt}_${Query}_tmp.modified \
 		$DIR \
 		${out}/${Query}_last.plasmid.tab_wlength
 		
