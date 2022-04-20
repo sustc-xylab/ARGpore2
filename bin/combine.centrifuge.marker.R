@@ -11,7 +11,7 @@ lineage<-fread(args[1])
 colnames(lineage)<-c("tax_id","kingdom","phylum","class","order","family","genus","species")
 
 cen<-fread(args[2])
-cen<-cen[which(cen$hitLength>150),] # only kept hitlenght > 150
+#cen<-cen[which(cen$hitLength>150),] # only kept hitlenght > 150
 colnames(cen)[3]<-c("tax_id")
 cen<-merge(cen,lineage, by="tax_id")
 cen<-as.data.frame(cen)
@@ -114,6 +114,8 @@ cen2<-cen2.nv}
 
 
 colnames(cen2)<-c("contig",rank)
+
+
 # read in the 2D.fa last marker gene result #####
 taxa<-fread(args[5],header=F)
 colnames(taxa)<-c("query","subject","similarity","align.lenth","mismatch","gap","q.start","q.end","s.start","s.end","evalue","bitscore","s.len","q.len")
@@ -188,16 +190,16 @@ m<-rbind(m,fasta.name[which(!fasta.name$contig %in% m$contig),])
 
 write.table(m,file=args[9],row.name=F,col.name=T, quote=F, sep="\t")
 
-#### print out the unclassified ratio########
-m2<-m
-c<-vector()
-for(i in 1:length(rank)){
-	n<-length(which(m2[,rank[i]]==""))
-	c[i]<-paste(round(n/nrow(m2)*100,2),"%",sep="")
-	}
-t<-matrix(c,ncol=length(rank))
-colnames(t)<-rank
-rownames(t)<-c("unclassified ratio")
-classified<-paste(args[9],"_unclassified.ratio.tab",sep="")
-write.table(t,file=classified,row.name=T,col.name=T, quote=F, sep="\t")
+# #### print out the unclassified ratio########
+# m2<-m
+# c<-vector()
+# for(i in 1:length(rank)){
+	# n<-length(which(m2[,rank[i]]==""))
+	# c[i]<-paste(round(n/nrow(m2)*100,2),"%",sep="")
+	# }
+# t<-matrix(c,ncol=length(rank))
+# colnames(t)<-rank
+# rownames(t)<-c("unclassified ratio")
+# classified<-paste(args[9],"_unclassified.ratio.tab",sep="")
+# write.table(t,file=classified,row.name=T,col.name=T, quote=F, sep="\t")
 

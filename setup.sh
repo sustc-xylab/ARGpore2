@@ -68,11 +68,11 @@ rm -f markers.fasta.tar.xz
 ###### SARG-nt database ################
 echo "
 Building lastdb for SARG-nt database"
-tar jxvf SARG_20170328_5020.ffn.tar.xz
-${DIR}/bin/last-983/src/lastdb -Q 0 SARG_20170328_5020.ffn SARG_20170328_5020.ffn -P 10
+tar zxvf SARG_20211207_14210_filter.ffn.tar.gz
+${DIR}/bin/last-983/src/lastdb -Q 0 SARG_20211207_14210_filter.ffn SARG_20211207_14210_filter.ffn -P 10
 
-$DIR/bin/fastaNameLengh.pl SARG_20170328_5020.ffn > SARG_20170328_5020.ffn.length
-rm -f SARG_20170328_5020.ffn.tar.xz
+$DIR/bin/fastaNameLengh.pl SARG_20211207_14210_filter.ffn > SARG_20211207_14210_filter.ffn.length
+rm -f SARG_20211207_14210_filter.ffn.tar.gz
 
 ########### ESCG database ##########################################
 echo "

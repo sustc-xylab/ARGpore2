@@ -60,7 +60,7 @@ Taxonomy annotation of nanopore reads were derived by combining results of Centr
 
 If you use ARGpore2 in your nanopore dataset analysis please cite:
 
-Xia, Y., Li, A.-D., Deng, Y., Jiang, X.-T., Li, L.-G., and Zhang, T. (**2017**) MinION Nanopore Sequencing Enables Correlation between Resistome Phenotype and Genotype of Coliform Bacteria in Municipal Sewage. *Front Microbiol* 8: 2105.
+waiting to be published
 
 ##### Tools included in ARGpore2 should be also cited, these tools includes: 
 

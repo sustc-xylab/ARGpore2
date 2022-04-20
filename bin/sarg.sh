@@ -21,14 +21,14 @@ echo "
 searching $Query agaisnt SARG-nt with similarity cutoff $Simcutoff and alignment length cutoff $Lencuoff using $N_threads threads"
 
 
-${DIR}/bin/last-983/src/lastal -s 2 -T 0 -Q 0 -a 1 -P $N_threads -f BlastTab ${DIR}/database/SARG_20170328_5020.ffn $Query > ${out}/argpore_${nowt}_${Query}_tmp.blast
+${DIR}/bin/last-983/src/lastal -s 2 -T 0 -Q 0 -a 1 -P $N_threads -f BlastTab ${DIR}/database/SARG_20211207_14210_filter.ffn $Query > ${out}/argpore_${nowt}_${Query}_tmp.blast
 
 echo "parsing SARG-nt last alignment"
 fgrep -v "#" ${out}/argpore_${nowt}_${Query}_tmp.blast > ${out}/argpore_${nowt}_${Query}_tmp.blast.modified
 rm -f ${out}/argpore_${nowt}_${Query}_tmp.blast
 
 ${DIR}/bin/BlastTab.addlen.sh \
-		${DIR}/database/SARG_20170328_5020.ffn \
+		${DIR}/database/SARG_20211207_14210_filter.ffn \
 		${Query} \
 		${out}/argpore_${nowt}_${Query}_tmp.blast.modified \
 		$DIR \
