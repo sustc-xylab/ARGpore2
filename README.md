@@ -58,11 +58,10 @@ Taxonomy annotation of nanopore reads were derived by combining results of Centr
 
 ## *Citation:*
 
-<<<<<<< HEAD
 If you use ARGpore2 in your nanopore dataset analysis please cite:
 
 waiting to be published
-=======
+
 
 
 ##### Tools included in ARGpore2 should be also cited, these tools includes: 
