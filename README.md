@@ -47,7 +47,7 @@ All output files of ARGpore are stored in a folder named $INPUT_FASTA_ARGpore_no
 
 Main output files include:
 	
-	input_arg.tab		ARG quntification (copy per cell)
+	input_arg.tab		ARG quntification (No. of reads)
 	input_arg.w.taxa.tab	ARGs-containing nanopore reads with taxonomy assignment and plausible plasmid identification
 	input_plasmid.like.tab	plasmid-like nanopore reads identified
 	input_taxa.tab		taxonomy assignment of all nanopore reads
