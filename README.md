@@ -60,8 +60,7 @@ Taxonomy annotation of nanopore reads were derived by combining results of Centr
 
 If you use ARGpore2 in your nanopore dataset analysis please cite:
 
-waiting to be published
-
+Ziqi Wu, You Che, Chenyuan Dang, Miao Zhang, Xuyang Zhang, Yuhong Sun, Xiang Li, Tong Zhang, Yu Xia*. 2022. Nanopore-based Long-read Metagenomics Uncover the Resistome Intrusion by Antibiotic Resistant Bacteria from Treated Wastewater in Receiving Water Body. Water Research. 226:119282. (https://doi.org/10.1016/j.watres.2022.119282)
 
 
 ##### Tools included in ARGpore2 should be also cited, these tools includes: 
