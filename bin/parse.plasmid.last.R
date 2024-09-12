@@ -15,9 +15,9 @@ filter.plasmid<-function(df,S=0.7,nL.plasmid=0.7,nL.chimera=0.5){
    #nL.chimera= the contig is consider a chimera like plasmid if its hit to plasmid is shorter than $nL.chimer of its length
    #nL.chimera=0.5
    
-    library(foreach)
-	library(doParallel)
-	library(plyr)
+  #library(foreach)
+	#library(doParallel)
+	#library(plyr)
    colnames(df)<-c("query","subject","similarity","align.lenth","mismatch","gap","q.start","q.end","s.start","s.end","evalue","bitscore","s.len","q.len")
    # df$query<-sapply(strsplit(df$query,"-"),"[[",1)
    
@@ -25,35 +25,45 @@ filter.plasmid<-function(df,S=0.7,nL.plasmid=0.7,nL.chimera=0.5){
    lookat<-which(df$similarity>=S*100)
    df<-df[lookat,]
    
-   # merge in plasmid name
-   df<-merge(df,pname,by="subject")
+   #nanopore read is a plasmid, only when almost the whole nanopore read (df$align.length/df$q.len>0.8)is aligned to a plasmid
+   lookat2<-which(df$align.lenth/df$q.len>nL.plasmid) 
+   df<-df[lookat2,]
    
    #filter overlap regions
    if(nrow(df)>0){
-      #### 去除同一个region hit到多个plasmid的情况，防止对ARG的重复count ####
+     
+      #### 去除同一个region hit到多个plasmid的情况，防止对plasmid 的重复count ####
+     # if one region hit to multiple plasmid, then if the hited region is overlaped > 50% alignment length with the first hit (the hit with highest bitscore) then it will be removed, otherwise it will be kept.  ##
+     
       tmp.lst<-split(df,df$query)
       
-      # for one region exactly hit to multiple ARG, only the best hit (the one with highest bitscore also the first hit ) was kept
+      # for one region exactly hit to multiple plasmid, only the best hit (the one with highest bitscore also the first hit ) was kept
       tmp.lst<-lapply(tmp.lst, function(x) x[!duplicated(x$q.start),])
       tmp.lst<-lapply(tmp.lst, function(x) x[!duplicated(x$q.end),])
       # lapply(tmp.lst,nrow)
       
-      # if one region hit to multiple ARG, then if the hited region is overlaped > 50% alignment length with the first hit (the hit with highest bitscore) then it will be removed, otherwise it will be kept.  ##
+
       
-	  
 	  # start_time <- Sys.time()
-	    cl<-makeCluster(no_threads, outfile="")
-		registerDoParallel(cl)
-		pb <- txtProgressBar(min=0, max= length(tmp.lst), style = 3) # progress bar
+	  #cl<-makeCluster(no_threads, outfile="")
+		#registerDoParallel(cl)
+		#pb <- txtProgressBar(min=0, max= length(tmp.lst), style = 3) # progress bar
 		
 		
-		tmp.lst2<-list()
-		tmp.lst2<-foreach(g =1:length(tmp.lst),
-                    .packages = c("plyr")) %dopar% {
-		# for(g in 1:length(test.lst)) {
+		
+    
+    tmp.lst2<-tmp.lst                  
+    lookat2<-which(unlist(lapply(tmp.lst2,nrow))>=2) # only work on items have multiple hits
+    
+    #tmp.lst2<-list()
+    #tmp.lst2<-foreach(g =1:length(tmp.lst),
+    #.packages = c("plyr")) %dopar% {
+    h=1
+    for(g in lookat2) {
 		# tmp.lst2<-mclapply(tmp.lst,function(x){
-         setTxtProgressBar(pb,g)
-		 x<-tmp.lst[[g]]
+         # setTxtProgressBar(pb,g)
+        
+		     x<-tmp.lst[[g]]
          # 保证q.start<q.end 对于反向的情况就把q.start,q.end互换
          lookat<-which(apply(x,1,function(y) as.numeric(y[7])> as.numeric(y[8])))
          tmp<-x[lookat,7]
@@ -81,10 +91,13 @@ filter.plasmid<-function(df,S=0.7,nL.plasmid=0.7,nL.chimera=0.5){
             tmp6<-tmp6[!is.na(tmp6)]
             x<-x[-tmp6,]
          }
-		 return(x)
+         tmp.lst2[[g]]<-x
+         cat(round(h/length(lookat2)*100,2),"% finished \n")
+         h=h+1
+		 #return(x)
       }
-	  stopCluster(cl)
-      # end_time <- Sys.time()
+	  # stopCluster(cl)
+    # end_time <- Sys.time()
 	  # end_time - start_time
       result<-rbind.fill(tmp.lst2)
       
@@ -92,6 +105,9 @@ filter.plasmid<-function(df,S=0.7,nL.plasmid=0.7,nL.chimera=0.5){
       cat("Warning!: NO Plasmid identified\n")
       result<-df
    }
+   
+   # merge in plasmid name
+   result<-merge(result,pname,by="subject")
    
    # since the refseq plasmid database contain two parts: 1) CDS of MGE 2) plasmid sequence, we need to further filter them with different cutoff for CDS and plasmid sequence
    # firstly seperate by CDS and plasmid sequence
@@ -119,11 +135,12 @@ filter.plasmid<-function(df,S=0.7,nL.plasmid=0.7,nL.chimera=0.5){
 }
 
 
-# fread(args[1],header=F,fill=T)->plasflow
+
 fread(args[1],header=F,fill=T)->plasmid
 fread(args[2],header=F)->pname #name of plasmid
 colnames(pname)<-c("subject","plasmid.name")
 no_threads<-as.numeric(args[6])
+
 plasmid.f<-filter.plasmid(plasmid,
                           S=as.numeric(args[3]),
                           nL.plasmid=0.7,
