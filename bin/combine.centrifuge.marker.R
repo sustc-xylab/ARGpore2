@@ -11,7 +11,7 @@ lineage<-fread(args[1])
 colnames(lineage)<-c("tax_id","kingdom","phylum","class","order","family","genus","species")
 
 cen<-fread(args[2])
-#cen<-cen[which(cen$hitLength>150),] # only kept hitlenght > 150
+# cen<-cen[which(cen$hitLength>150),] # only kept hitlenght > 150
 colnames(cen)[3]<-c("tax_id")
 cen<-merge(cen,lineage, by="tax_id")
 cen<-as.data.frame(cen)
@@ -93,6 +93,7 @@ rank.lst<-foreach(i =1:length(tmp.readID),
                       # rank.lst[[i]]<-result
                       #cat(paste("finish ",i,"\n", sep=" "))
                     }
+
 stopCluster(cl)
 stopImplicitCluster()
 cat("\nfinish voting\n")
@@ -114,7 +115,6 @@ cen2<-cen2.nv}
 
 
 colnames(cen2)<-c("contig",rank)
-
 
 # read in the 2D.fa last marker gene result #####
 taxa<-fread(args[5],header=F)
@@ -148,58 +148,65 @@ minl.t<-ncol(taxa)-1
 if(minl.c<7){for(j in (minl.c+1):7){cen2[,rank[j]]<-""}} # subset rank in case none of the ont read is assigned to species
 if(minl.t<7){for(j in (minl.t+1):7){taxa[,rank[j]]<-""}} 
 
-merge.taxa<-function(k,t){
-	# k as the basis for taxa of t to merge into, taxa from t is merged in only when t's above level taxa is equal to k
-
-	m<-merge(k,t, by="contig", all=T)
-	m[is.na(m)]<-""
-	m<-as.data.frame(m)
-	for(i in 1:length(rank)){
-		#target level
-		x<-paste(rank[i],"x",sep=".") # corespond to k 
-		y<-paste(rank[i],"y",sep=".") # corespond to t
-		lookat<-which(m[,x]=="")
-		if(i==1) {
-		m[,rank[i]]<-m[,x]
-		m[,rank[i]][lookat]<-m[,y][lookat]
-		} 
-		else {
-			# previous level
-			x2<-paste(rank[i-1],"x",sep=".") # corespond to k
-			y2<-paste(rank[i-1],"y",sep=".") # corespond to t
-			lookat2<-which(m[,x2]==m[,y2] & all(m[,x2]=="",m[,y2]==""))
-			lookat3<-intersect(lookat,lookat2)
-			m[,rank[i]]<-m[,x]
-			if(length(lookat3)>0) {
-			
-			m[,rank[i]][lookat3]<-m[,y][lookat3]}
-		}
-	}
-	# m<-m[,1:8]
-	m<-m[,c("contig",rank)]
-	colnames(m)<-c("contig",rank)
-	return(m)
-}
+# # merge.taxa<-function(k,t){
+# 	# k as the basis for taxa of t to merge into, taxa from t is merged in only when t's above level taxa is equal to k
+# 
+# 	m<-merge(k,t, by="contig", all=T)
+# 	m[is.na(m)]<-""
+# 	m<-as.data.frame(m)
+# 	for(i in 1:length(rank)){
+# 		#target level
+# 		x<-paste(rank[i],"x",sep=".") # corespond to k 
+# 		y<-paste(rank[i],"y",sep=".") # corespond to t
+# 		lookat<-which(m[,x]=="")
+# 		if(i==1) {
+# 		m[,rank[i]]<-m[,x]
+# 		m[,rank[i]][lookat]<-m[,y][lookat]
+# 		} 
+# 		else {
+# 			# previous level
+# 			x2<-paste(rank[i-1],"x",sep=".") # corespond to k
+# 			y2<-paste(rank[i-1],"y",sep=".") # corespond to t
+# 			lookat2<-which(m[,x2]==m[,y2] & all(m[,x2]=="",m[,y2]==""))
+# 			lookat3<-intersect(lookat,lookat2)
+# 			m[,rank[i]]<-m[,x]
+# 			if(length(lookat3)>0) {
+# 			
+# 			m[,rank[i]][lookat3]<-m[,y][lookat3]}
+# 		}
+# 	}
+# 	# m<-m[,1:8]
+# 	m<-m[,c("contig",rank)]
+# 	colnames(m)<-c("contig",rank)
+# 	return(m)
+# }
 
 # use which centrifuge as basis to merge in markergene
 # merge in taxa from marker only when marker's above level taxa is equal to centrifuge
-m<-merge.taxa(data.frame(cen2),data.frame(taxa))
+# m<-merge.taxa(data.frame(cen2),data.frame(taxa))
+# m<-rbind(m,fasta.name[which(!fasta.name$contig %in% m$contig),])
 
-m<-rbind(m,fasta.name[which(!fasta.name$contig %in% m$contig),])
+
+# 20240828 new merge by firstly keeping markergene results and then bind in other centrifuge results
+lookat<-which(!cen2$contig %in% taxa$contig)
+cen3<-cen2[lookat,]
+m<-rbind(cen3,taxa)
+
+
 
 
 write.table(m,file=args[9],row.name=F,col.name=T, quote=F, sep="\t")
 
-# #### print out the unclassified ratio########
-# m2<-m
-# c<-vector()
-# for(i in 1:length(rank)){
-	# n<-length(which(m2[,rank[i]]==""))
-	# c[i]<-paste(round(n/nrow(m2)*100,2),"%",sep="")
-	# }
-# t<-matrix(c,ncol=length(rank))
-# colnames(t)<-rank
-# rownames(t)<-c("unclassified ratio")
-# classified<-paste(args[9],"_unclassified.ratio.tab",sep="")
-# write.table(t,file=classified,row.name=T,col.name=T, quote=F, sep="\t")
+#### print out the unclassified ratio########
+m2<-m
+c<-vector()
+for(i in 1:length(rank)){
+	n<-length(which(m2[,rank[i]]==""))
+	c[i]<-paste(round(n/nrow(m2)*100,2),"%",sep="")
+	}
+t<-matrix(c,ncol=length(rank))
+colnames(t)<-rank
+rownames(t)<-c("unclassified ratio")
+classified<-paste(args[9],"_unclassified.ratio.tab",sep="")
+write.table(t,file=classified,row.name=T,col.name=T, quote=F, sep="\t")
 

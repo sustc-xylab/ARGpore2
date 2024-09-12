@@ -3,18 +3,6 @@ system("echo \n")
 #### read in system arguements ######
 options(echo=F) # if you want see commands in output file
 args <- commandArgs(trailingOnly = TRUE)
-# args<-c(
-# "test.fa.uniq_sarg/test.fa.uniq_sarg.last",
-# "test.fa.uniq_sarg/test.fa.uniq_escg.last",
-# "20",
-# "../database/structure.RData",
-# "test.fa.uniq_taxa.tab",
-# "75",
-# "0.9",
-# "test.fa.uniq_plasmid.like.tab",
-# "test.fa.uniq_arg.w.taxa.tab",
-# "test.fa.uniq_arg.tab",
-# "test.fa.uniq_arg.summary.tab")
 
 library(plyr)
 library(data.table)
@@ -216,12 +204,11 @@ escg.filter<-function(df,S=70,L=0.9,no_threads=1){
     
   } 
   # calclate no_c based on df.filtered
-  # cat("\nCalculating cell number based on KO annotation \n")
+  cat("\nCalculating cell number based on KO annotation \n")
   tmp.ko<-table(df.filtered$ko)
   # no_c<-mean(tmp.ko) 
   result2<-list(df.filtered=df.filtered, no_c=tmp.ko)
   return(result2)
-  
 }
 
 
@@ -234,7 +221,6 @@ escg.f<-escg.filter(escg,
 # cell number estimation qual to ESCG showing the largest copy 
 NO.c<-max(escg.f$no_c)
 
-#cat("done calculating cell number\n")
 ###############
 # combine ARG profile with taxa profile
 # arg.summary: the final results
@@ -242,22 +228,17 @@ NO.c<-max(escg.f$no_c)
 
 # get ARG profile of nanopore query with taxa classification
 # results in arg.summary
-tmp<-arg.f[,c("query","subtype","type")]
-write.table(tmp,file=args[10],quote=F,row.names = F,sep="\t")
-
 if(nrow(arg.f)>0){
 	arg.w.taxa<-merge(arg.f,taxa,by="query",all.x=T)
 	arg.w.taxa<-merge(arg.w.taxa,plasmid,by="query",all.x=T)
 	arg.w.taxa[is.na(arg.w.taxa)]<-""
-	cat("done here\n")
-	
-	
 	arg.c<-aggregate( query~subtype+type,arg.w.taxa,length)
+	arg.c$copy.per.cell<-arg.c$query/NO.c
 	colnames(arg.c)[3]<-c("No.reads")
 	
 	# --  write out ----
 	write.table(arg.w.taxa,file=args[9], quote=F,row.names = F,sep="\t")
-	write.table(arg.c,file=args[11], quote=F,row.names = F,sep="\t")
+	write.table(arg.c,file=args[10], quote=F,row.names = F,sep="\t")
 } else { 
   cat("Warning: NO ARG identified\nOnly taxa annotations were generated \n")
   
