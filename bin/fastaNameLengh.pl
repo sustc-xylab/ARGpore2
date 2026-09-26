@@ -1,4 +1,5 @@
-#!/usr/bin/perl -w
+#!/usr/bin/env perl
+# use conda/env perl so Bio::SeqIO (perl-bioperl) can be found
 
 ## Help text in perldoc format
 =head1 SYNOPSIS

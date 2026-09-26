@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+echo "NOTE: tools and databases are split. Prefer:"
+echo "  bash setup-tools.sh && bash setup-db.sh"
+echo "  bash argpore.sh --check"
+echo "This setup.sh still mixes binary downloads and database setup (upstream behaviour)."
+echo
+
 SCRIPT=`realpath $0`
 DIR=`dirname $SCRIPT`
 
