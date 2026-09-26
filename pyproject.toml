@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "argpore2"
+version = "2.1.0"
+description = "ARG and host identification from nanopore reads"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+  {name = "Yu Xia lab, Southern University of Science and Technology"},
+]
+keywords = ["nanopore", "ARG", "metagenomics"]
+
+[project.scripts]
+argpore2 = "argpore2.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
