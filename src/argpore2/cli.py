@@ -8,6 +8,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from argpore2 import __version__
+
 FASTA_SUFFIXES = {".fa", ".fasta", ".fas", ".fna", ".ffn"}
 
 
@@ -130,7 +132,7 @@ def build_parser() -> argparse.ArgumentParser:
             "Maintenance commands: argpore2 check, setup-tools, setup-db."
         ),
     )
-    parser.add_argument("--version", action="version", version="argpore2 2.1.0")
+    parser.add_argument("--version", action="version", version=f"argpore2 {__version__}")
     parser.add_argument("-f", "--fasta", required=True, help="Input FASTA (.fa, .fasta, .fas, .fna, .ffn)")
     parser.add_argument("-t", "--threads", type=int, default=1)
     parser.add_argument("-o", "--outdir", required=True, help="Directory for all outputs")

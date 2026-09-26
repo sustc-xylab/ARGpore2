@@ -2,13 +2,13 @@
 ## ARGpore is designed to identify ARGs and their host in nanopore dataset
 ##Author: Yu XIA 2020-06-11
 ##Email: shuixia100@gmail.com
-##version 2.1
+##version 2.1.1
 set -e
 
 #### usage info ####
 show_help() {
 cat << EOF
-version 2.1
+version 2.1.1
 arguments:
 	-h	display this help 
 
