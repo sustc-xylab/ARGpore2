@@ -6,44 +6,53 @@ ARGpore2 is a easy-to-use bioinformatics pipeline which codifies the current bes
 
 Please read below instructions carefully to avoid unnecessary errors.
 
-## Installation 
-### Pre-requisites for ARGpore 
+## Installation
+
+Program installation and reference-data preparation are separate. Reference data stay on their original sites (git LFS, Figshare, S3). This repository does not republish those files. The versions used here are those of the 2022 analysis (PLSDB `2020_03_04`, SARG `20211207`, Centrifuge `p_compressed+h+v`). A failed download is not replaced by a later release.
+
+After installation the command is `argpore2` (the shell script `argpore.sh` remains the analysis engine).
+
+R cannot be solved into the same conda environment as BioPerl and centrifuge, so two environments are required.
+
+```bash
+git clone https://github.com/sustc-xylab/ARGpore2.git
+cd ARGpore2
+conda env create -f environment-tools.yml
+conda env create -f environment-r.yml
+conda activate argpore2
+pip install -e .
+argpore2 setup-tools
+argpore2 setup-db
+argpore2 check
+```
+
+`setup-tools` and `setup-db` look for conda environments `argpore2` and `argpore2-r` (`ARGPORE_CONDA_ENV`, `ARGPORE_R_ENV`). `setup-db` can be repeated. Source archives are kept. HTTP 403/404 or a truncated file is an error: the message names the file and the path under `database/` where a manual copy should be placed. Already completed files are left in place.
+
+| Item | Channel | Version used |
+| --- | --- | --- |
+| MetaPhlAn2 markers, SARG, ESCG, lineage | git LFS / files in `database/` | as archived in this repository |
+| PLSDB | Figshare file `21961095` | `2020_03_04` |
+| Centrifuge index | `genome-idx.s3.amazonaws.com` | `p_compressed+h+v` |
+
+If Figshare returns 403, download version `2020_03_04` from the [PLSDB previous-versions list](https://ccb-microbe.cs.uni-saarland.de/plsdb2025/download) and place `PLSDB.zip` or `PLSDB_2020_03_04.fna` in `database/`, then run `argpore2 setup-db` again.
+
+`setup.sh` still mixes program downloads and reference data. Use `argpore2 setup-tools` and `argpore2 setup-db` instead.
+
+## Using ARGpore2
+
+```bash
+argpore2 -f test.fa -t 60 -o demo
+```
+
+Accepted FASTA suffixes are `.fa`, `.fasta`, `.fas`, `.fna`, and `.ffn`. `-o` receives a hard link to the input when the filesystem allows it, and a copy otherwise. Products are written only under `-o`. Reads longer than 1 kb are recommended.
+
+`bash argpore.sh -f test.fa -t 60 -o demo` calls the same analysis.
+
+
 	
-	python2.7	### sudo apt install python2.7
-	GNU parallel	### sudo apt install parallel
-	git lfs	        ### sudo apt install git-lfs
-	R and library: plyr, data.table, doParallel, foreach 
-	
+#### Output files
 
-### Setup ARGpore2
-	
-	git clone https://github.com/sustc-xylab/ARGpore2.git
-	
-	cd ARGpore2
-	
-	bash ./setup.sh	
-
-The setup.sh will install **blast+, Centrifuge** and then download **bacteria+archaea+virus database for Centrifuge, MetaPhlan2 Markergene and PLSDB database** for you. It will take at least **4 hour** to finish, please stay patient :)
-
-
-
-## Using ARGpore2 
-Once installed ARGpore2 package, all needed analysis is wrapped up in one executable named **argpore.sh**. Please **use bash instead of sh** to initiate argpore.sh.
-
-**NOTICE:**
-	To avoid cross-writing of intermediate files, each ARGpore run should has a independent working directory. To improve annotation accuracy, your input fasta should be **longer than 1kb** 
-	
-	
-
-	mkdir -p demo
-	cp test.fa demo 
-	cd demo 
-	bash $PATH_to_ARGpore2/argpore.sh -f test.fa -t 60 > ARGpore.log
-
-
-	
-#### Output files 
-All output files of ARGpore are stored in a folder named $INPUT_FASTA_ARGpore_nowtime in the working directory.
+With `-o`, results are written under that directory, in a folder named `$INPUT_FASTA_ARGpore2_<timestamp>`.
 
 Main output files include:
 	
