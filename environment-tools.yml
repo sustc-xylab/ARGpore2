@@ -1,0 +1,12 @@
+name: argpore2
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - seqkit
+  - blast
+  - centrifuge
+  - parallel
+  - perl-bioperl
+  - git-lfs
+  - wget

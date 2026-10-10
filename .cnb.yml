@@ -1,0 +1,35 @@
+# Syntax check, and confirm `argpore2 check` fails when reference data are absent.
+# This does not run the analysis.
+
+.ci: &ci
+  - name: syntax-and-check
+    runner:
+      cpus: 1
+    docker:
+      image: python:3.11-bookworm
+    stages:
+      - name: bash-syntax
+        script: |
+          set -eu
+          for script in argpore.sh setup.sh setup-tools.sh setup-db.sh check-setup.sh setup_fast.sh; do
+            bash -n "$script"
+          done
+          python -m pip install -e .
+          argpore2 --help
+          if [ -s database/PLSDB_2020_03_04.fna ]; then
+            echo "reference data present; skip the expected-failure check"
+            exit 0
+          fi
+          if argpore2 check; then
+            echo "argpore2 check should fail when reference data are absent"
+            exit 1
+          fi
+          echo "argpore2 check failed as expected"
+
+main:
+  push: *ci
+  pull_request: *ci
+
+mhb:
+  push: *ci
+  pull_request: *ci

@@ -2,13 +2,13 @@
 ## ARGpore is designed to identify ARGs and their host in nanopore dataset
 ##Author: Yu XIA 2020-06-11
 ##Email: shuixia100@gmail.com
-##version 2.1
+##version 2.1.1
 set -e
 
 #### usage info ####
 show_help() {
 cat << EOF
-version 2.1
+version 2.1.1
 arguments:
 	-h	display this help 
 
@@ -21,6 +21,14 @@ arguments:
 		default alignment length cutoff is 0.9
 
 	-t	number of threads used for parallel computiong, default t=1
+
+	-o	output directory. The input FASTA is hard-linked here when the
+		filesystem allows it, otherwise it is copied. The run then
+		proceeds inside this directory. If omitted, files are written
+		in the current working directory.
+
+	--check	verify tools and pinned databases, then exit
+		(does not run the pipeline)
 
 
 output files:
@@ -44,11 +52,17 @@ OPTIND=1  # Reset in case getopts has been used previously in the shell.
 # initial value of variables
 N_threads="1"
 Input_fa=""
+OUTDIR=""
 Lencutoff="0.9"
 Simcutoff="70"
 nowt=`date +%Y-%m-%d.%H:%M:%S`;
 SCRIPT=`realpath $0`
 DIR=`dirname $SCRIPT`
+
+if [ "${1:-}" = "--check" ] || [ "${1:-}" = "-c" ]; then
+	bash "$DIR/check-setup.sh"
+	exit $?
+fi
 
 while getopts "t:f:l:s:o:h" opt; do
 	case "$opt" in
@@ -67,6 +81,9 @@ while getopts "t:f:l:s:o:h" opt; do
 			;;
 		s)
 			Simcutoff=`echo "$OPTARG*100"|bc`
+			;;
+		o)
+			OUTDIR=$OPTARG
 			;;
 		\?)
 			echo "Invalid option: -$OPTARG" >&2
@@ -97,12 +114,27 @@ then
 fi
 
 shift "$((OPTIND-1))"
-# echo $Input_fa $Simcutoff $Lencutoff $N_threads $Output $DIR $nowt
+
+if [ -n "$OUTDIR" ]; then
+	mkdir -p "$OUTDIR"
+	OUTDIR=$(cd "$OUTDIR" && pwd)
+	Input_base=$(basename "$Input_fa")
+	if [ ! -f "$Input_fa" ]; then
+		echo "Input fasta not found: $Input_fa" >&2
+		exit 1
+	fi
+	if [ "$(cd "$(dirname "$Input_fa")" && pwd)/$Input_base" != "$OUTDIR/$Input_base" ]; then
+		if ! ln "$Input_fa" "$OUTDIR/$Input_base" 2>/dev/null; then
+			cp -a "$Input_fa" "$OUTDIR/$Input_base"
+		fi
+	fi
+	cd "$OUTDIR"
+	Input_fa="$Input_base"
+fi
 
 # subset the name of the $Input_fa
 # $Input_fa : including input.fa path while $Input_fa2 only contain name
-myarray=(`echo $Input_fa| tr "/" " "`) 
-Input_fa2=${myarray[-1]}
+Input_fa2=$(basename "$Input_fa")
 
 echo "remove nanopore reads with duplicated name"
 $DIR/bin/seqkit rmdup -n $Input_fa2 -o ${Input_fa2}.uniq

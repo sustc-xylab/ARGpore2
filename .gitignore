@@ -1,0 +1,35 @@
+# local logs
+setup.log
+setup_fast.log
+
+# extracted / indexed databases (source archives stay tracked)
+database/*.fasta
+database/*.fna
+database/*.ffn
+database/*.cf
+database/*.length
+database/*.name
+database/*.bck
+database/*.des
+database/*.prj
+database/*.sds
+database/*.ssp
+database/*.suf
+database/*.tis
+database/2020-06-16_lineage.tab
+database/PLSDB_2020_03_04/
+database/PLSDB.zip
+database/p+b+v.tar.gz
+
+# conda tool symlinks used by argpore.sh
+bin/seqkit
+bin/centrifuge/
+bin/ncbi-blast+/
+
+# python package build
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/

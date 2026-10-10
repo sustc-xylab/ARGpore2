@@ -1,0 +1,10 @@
+name: argpore2-r
+channels:
+  - conda-forge
+dependencies:
+  - r-base
+  - r-plyr
+  - r-data.table
+  - r-dplyr
+  - r-foreach
+  - r-doparallel

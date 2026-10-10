@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 #
 # @author: Luis M. Rodriguez-R <lmrodriguezr at gmail dot com>
